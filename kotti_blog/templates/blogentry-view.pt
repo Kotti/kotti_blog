@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      metal:use-macro="api.macro('kotti:templates/view/master.pt')">
+
+  <article metal:fill-slot="content" class="blogentry-view content">
+    <h1>${api.context.title}</h1>
+    <p class="description">
+      ${api.context.description}
+    </p>
+
+    <p class="body">
+      ${api.context.body}
+    </p>
+
+  </article>
+
+</html>

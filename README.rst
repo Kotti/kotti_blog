@@ -1,0 +1,1 @@
+Blog addon for Kotti.
