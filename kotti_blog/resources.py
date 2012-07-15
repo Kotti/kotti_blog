@@ -13,7 +13,6 @@ from kotti.resources import Document
 
 class Blog(Document):
     id = Column('id', Integer, ForeignKey('documents.id'), primary_key=True)
-    body = Column('body', UnicodeText())
 
     type_info = Document.type_info.copy(
         name=u'Blog',
@@ -30,7 +29,6 @@ class Blog(Document):
 
 class BlogEntry(Document):
     id = Column(Integer, ForeignKey('documents.id'), primary_key=True)
-    body = Column(UnicodeText())
     
     type_info = Document.type_info.copy(
         name=u'Blog entry',
