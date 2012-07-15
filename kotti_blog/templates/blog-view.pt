@@ -15,8 +15,7 @@
     <p class="description">
       ${api.context.description}
     </p>
-    <p class="body">
-      ${api.context.body}
+    <p class="body" tal:content="structure api.context.body">
     </p>
 
     <h2 tal:condition="blogentries" i18n:translate="">Blogentries</h2>

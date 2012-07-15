@@ -10,8 +10,7 @@
       ${api.context.description}
     </p>
 
-    <p class="body">
-      ${api.context.body}
+    <p class="body" tal:content="structure api.context.body">
     </p>
 
   </article>
