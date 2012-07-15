@@ -17,6 +17,7 @@ class Blog(Document):
 
     type_info = Document.type_info.copy(
         name=u'Blog',
+        title=u'Blog',
         add_view=u'add_blog',
         addable_to=[u'Document'],
         )
@@ -33,6 +34,7 @@ class BlogEntry(Document):
     
     type_info = Document.type_info.copy(
         name=u'Blog entry',
+        title=u'Blog entry',
         add_view=u'add_blogentry',
         addable_to=[u'Blog'],
         )
