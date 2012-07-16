@@ -20,7 +20,7 @@ Setup and Login
   True
 
 Add a blog
---------------
+----------
 
   >>> browser.open(tests.BASE_URL + '/@@add_blog')
   >>> ctrl("Title").value = "New Blog"
@@ -33,7 +33,7 @@ Add a blog
 
 
 Add blogentries
----------------------
+---------------
 
   >>> browser.open(tests.BASE_URL + '/new-blog/@@add_blogentry')
   >>> ctrl("Title").value = "First blog entry"
@@ -51,7 +51,7 @@ Add blogentries
 
 
 View blog and blog entry
----------------------------------
+------------------------
 
   >>> browser.open(tests.BASE_URL + '/new-blog/')
   >>> "First blog entry" in browser.contents
@@ -63,4 +63,27 @@ View blog and blog entry
   True
   >>> browser.getLink("Second blog entry").click()
   >>> "rumoring around a bit" in browser.contents
+  True
+
+
+Edit blog and blog entry and verify the changes
+-----------------------------------------------
+
+  >>> browser.open(tests.BASE_URL + '/new-blog/@@edit')
+  >>> ctrl("Title").value = "This is the Blog"
+  >>> ctrl("Body").value = "Hello, I am a blog"
+  >>> ctrl("save").click()
+
+  >>> browser.open(tests.BASE_URL + '/new-blog/first-blog-entry/@@edit')
+  >>> ctrl("Title").value = "I was the first blog entry"
+  >>> ctrl("save").click()
+
+  >>> browser.open(tests.BASE_URL + '/new-blog/')
+  >>> "Hello, I am a blog" in browser.contents
+  True
+  >>> "First blog entry" in browser.contents
+  False
+  >>> "I was the first blog entry" in browser.contents
+  True
+  >>> "And I like to say..." in browser.contents
   True
