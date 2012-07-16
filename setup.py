@@ -10,10 +10,13 @@ tests_require = [
 
 here = os.path.abspath(os.path.dirname(__file__))
 README = open(os.path.join(here, 'README.rst')).read()
+AUTHORS = open(os.path.join(here, 'AUTHORS.txt')).read()
 CHANGES = open(os.path.join(here, 'CHANGES.txt')).read()
 
 long_description = (
     README
+    + '\n' +
+    AUTHORS
     + '\n' +
     CHANGES
 )
