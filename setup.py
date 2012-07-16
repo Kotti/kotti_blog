@@ -4,8 +4,8 @@ import sys, os
 version = '0.2dev'
 
 tests_require = [
-    'pytest-cov',
     'pytest',
+    'pytest-cov',
 ]
 
 here = os.path.abspath(os.path.dirname(__file__))

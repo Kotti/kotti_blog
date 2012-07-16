@@ -28,7 +28,7 @@ Add a blog
   >>> ctrl("save").click()
   >>> "Successfully added item" in browser.contents
   True
-  >>> browser.url == tests.BASE_URL + '/new-blog/@@edit'
+  >>> browser.url == tests.BASE_URL + '/new-blog/'
   True
 
 
