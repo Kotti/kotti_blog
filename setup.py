@@ -22,7 +22,7 @@ setup(name='kotti_blog',
       version=version,
       description="Kotti blog",
       long_description=long_description,
-      classifiers=[], # Get strings from http://pypi.python.org/pypi?%3Aaction=list_classifiers
+      classifiers=[],
       keywords='kotti blog',
       author='',
       author_email='',
@@ -31,8 +31,19 @@ setup(name='kotti_blog',
       packages=find_packages(exclude=['ez_setup', 'examples', 'tests']),
       include_package_data=True,
       zip_safe=False,
-      install_requires=['Kotti>=0.5.1'] + tests_require,
+      install_requires=[
+        'Kotti'
+      ],
       entry_points="""
       # -*- Entry points: -*-
       """,
+      tests_require=tests_require,
+      extras_require={
+          'testing': tests_require,
+          },
+      message_extractors={'kotti_blog': [
+            ('**.py', 'lingua_python', None),
+            ('**.zcml', 'lingua_xml', None),
+            ('**.pt', 'lingua_xml', None),
+            ]},
       )
