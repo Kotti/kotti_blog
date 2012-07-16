@@ -4,6 +4,10 @@ CHANGES
 0.2
 ---
 
+- Move to fanstatic for include static resources.
+- Convert SQLAlchemy tables to Declarative syntax.
+- Fix how content types appear in Add menu.
+- Document subclasses should not have duplicate 'body' field.
 
 
 0.1
