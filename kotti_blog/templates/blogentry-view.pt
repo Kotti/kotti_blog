@@ -11,7 +11,7 @@
     </p>
 
     <p class="body">
-      ${api.context.body}
+      ${structure: api.context.body}
     </p>
 
   </article>
