@@ -32,10 +32,11 @@ setup(name='kotti_blog',
       include_package_data=True,
       zip_safe=False,
       install_requires=[
-        'Kotti'
+          'Kotti>=0.7a4',
       ],
       entry_points="""
-      # -*- Entry points: -*-
+      [fanstatic.libraries]
+      kotti_blog = kotti_blog:library
       """,
       tests_require=tests_require,
       extras_require={
