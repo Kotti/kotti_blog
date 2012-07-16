@@ -14,7 +14,7 @@
       ${structure: api.context.body}
     </p>
 
-    <h2 tal:condition="blogentries" i18n:translate="">Blogentries</h2>
+    <h2 tal:condition="blogentries" i18n:translate="">Blog entries</h2>
     <ul>
       <li tal:repeat="blogentry blogentries">
         <h3>
