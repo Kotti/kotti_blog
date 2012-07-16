@@ -4,11 +4,6 @@
       xmlns:tal="http://xml.zope.org/namespaces/tal"
       metal:use-macro="api.macro('kotti:templates/view/master.pt')">
 
-  <head tal:omit-tag="" metal:fill-slot="head-more">
-    <link rel="stylesheet" href="${request.static_url('kotti_blog:static/style.css')}" type="text/css" />
-    <more tal:omit-tag="" metal:define-slot="head"></more>
-  </head>
-
   <article metal:fill-slot="content" class="blog-view content">
 
     <h1>${api.context.title}</h1>
