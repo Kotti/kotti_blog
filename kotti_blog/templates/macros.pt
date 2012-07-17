@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xml:lang="en"
+      i18n:domain="kotti_blog"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      metal:use-macro="api.macro('kotti:templates/view/master.pt')">
+
+<tal:pagination metal:define-macro="pagination">
+    <div class="pagination"
+         tal:define="url api.url(context);
+                     batch items"
+         tal:condition="batch.multiple_pages">
+      <ul>
+        <li class="previous" tal:condition="batch.has_previous">
+            <a href="" tal:attributes="href string:${url}?page=${batch.previouspage}" i18n:translate="">
+               Previous <span i18n:name="number" tal:omit-tag="" tal:content="batch.pagesize">n</span> items
+            </a>
+        </li>
+        <li tal:condition="batch.show_link_to_first">
+            <a href="" tal:attributes="href string:${url}?page=1">1</a>
+            <span tal:condition="batch.second_page_not_in_navlist" tal:omit-tag="">...</span>
+        </li>
+        <li tal:repeat="page batch.previous_pages">
+          <a href="" tal:content="page" tal:attributes="href string:${url}?page=${page}"/>
+        </li>
+        <li class="active" tal:condition="batch.navlist">
+            <a href="#" tal:content="batch.pagenumber">Current page number</a>
+        </li>
+        <li tal:repeat="page batch.next_pages">
+          <a href="" tal:content="page" 
+             tal:attributes="href string:${url}?page=${page}"/>
+        </li>
+        <li tal:condition="batch.show_link_to_last">
+            <span tal:condition="batch.before_last_page_not_in_navlist" tal:omit-tag="">...</span>
+            <a href=""
+               tal:attributes="href string:${url}?page=${batch.lastpage}"
+               tal:content="batch.lastpage">last page</a>
+        </li>
+        <li class="next"
+              tal:condition="batch.has_next">
+            <a href="" tal:attributes="href string:${url}?page=${batch.nextpage}" i18n:translate="">
+                   Next <span i18n:name="number" tal:omit-tag="" tal:content="batch.next_item_count">n</span> items
+            </a>
+        </li>
+      </ul>
+    </div>
+</tal:pagination>
+
+</html>
