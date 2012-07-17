@@ -1,19 +1,30 @@
+import datetime
 from plone.batching import Batch
 from pyramid.renderers import get_renderer
+import colander
+from deform.widget import DateTimeInputWidget
 
 from kotti import DBSession
-from kotti.views.edit import DocumentSchema
-from kotti.views.edit import generic_edit
-from kotti.views.edit import generic_add
+from kotti.views.edit import (
+    DocumentSchema,
+    generic_edit,
+    generic_add,
+)
 from kotti.views.view import view_node
-from kotti.views.util import ensure_view_selector
-from kotti.views.util import template_api
+from kotti.views.util import (
+    ensure_view_selector,
+    template_api,
+    format_datetime,
+)
 
 from kotti_blog.resources import (
     Blog,
     BlogEntry,
 )
-from kotti_blog import blog_settings
+from kotti_blog import (
+    blog_settings,
+    _,
+)
 
 
 class BlogSchema(DocumentSchema):
@@ -21,7 +32,17 @@ class BlogSchema(DocumentSchema):
 
 
 class BlogEntrySchema(DocumentSchema):
-    pass
+    date = colander.SchemaNode(
+        colander.DateTime(),
+        title=_(u'Date'),
+        description=_(u'Choose date of the blog entry. If you leave this empty the modification date is used.'),
+        validator=colander.Range(
+            min=datetime.datetime(
+            2012, 1, 1, 0, 0, tzinfo=colander.iso8601.Utc()),
+            min_err=_('${val} is earlier than earliest datetime ${min}')),
+        widget=DateTimeInputWidget(),
+        missing=None,
+    )
 
 
 @ensure_view_selector
@@ -43,16 +64,22 @@ def add_blogentry(context, request):
 
 
 def view_blog(context, request):
+    settings = blog_settings()
+    macros = get_renderer('templates/macros.pt').implementation()
     session = DBSession()
     query = session.query(BlogEntry).filter(BlogEntry.parent_id == context.id)
     items = query.all()
-    page = request.params.get('page', 1)  # TODO: settings
-    settings = blog_settings()
+    page = request.params.get('page', 1)
     if settings['use_batching']:
         items = Batch.fromPagenumber(items,
                       pagesize=settings['pagesize'],
                       pagenumber=int(page))
-    macros = get_renderer('templates/macros.pt').implementation()
+    for item in items:
+        item.formatted_date = item.date
+        if item.formatted_date is None:
+            item.formatted_date = item.modification_date
+        item.formatted_date = format_datetime(datetime=item.formatted_date)  # , format=format)
+
     return {
         'api': template_api(context, request),
         'macros': macros,

@@ -15,16 +15,16 @@
       ${structure: api.context.body}
     </p>
 
-    <div tal:condition="items" class="blogentries">
-      <article tal:repeat="blogentry items">
+    <div tal:condition="items" class="items">
+      <div tal:repeat="item items" class="item">
+        <span tal:content="item.formatted_date" /><span class="socialshareprivacy" data-uri="${api.url(item)}"></span>
         <h3>
-          <a href="${api.url(blogentry)}" title="${blogentry.description}">
-            ${blogentry.title}
+          <a href="${api.url(item)}" title="${item.description}" tal:omit-tag="not: settings['link_headline_overview']">
+            ${item.title}
           </a>
         </h3>
-        <p>${structure: blogentry.body}</p>
-        <div class="socialshareprivacy" data-uri="${api.url(blogentry)}">${api.url(blogentry)}</div>
-      </article>
+        <p>${structure: item.body}</p>
+      </div>
     </div>
 
    <tal:pagination tal:condition="settings['use_batching']"
