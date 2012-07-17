@@ -3,14 +3,12 @@ from fanstatic import (
     Resource,
     )
 from pyramid.i18n import TranslationStringFactory
-from kotti.static import view_needed
 from kotti.util import extract_from_settings
 
 _ = TranslationStringFactory('kotti_blog')
 
 library = Library("kotti_blog", "static")
 kotti_blog_css = Resource(library, "style.css")
-view_needed.add(kotti_blog_css)
 
 
 def kotti_configure(settings):
@@ -28,6 +26,7 @@ BLOG_DEFAULTS = {
     'use_batching': 'true',
     'pagesize': '5',
     'use_auto_batching': 'true',
+    'link_headline_overview': 'true',
     }
 
 
@@ -43,4 +42,5 @@ def blog_settings(name=''):
     except ValueError:
         settings['pagesize'] = 5
     settings['use_auto_batching'] = check_true(settings['use_auto_batching'])
+    settings['link_headline_overview'] = check_true(settings['link_headline_overview'])
     return settings
