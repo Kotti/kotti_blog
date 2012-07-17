@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xml:lang="en"
+      i18n:domain="kotti_blog"
       xmlns:tal="http://xml.zope.org/namespaces/tal"
       metal:use-macro="api.macro('kotti:templates/view/master.pt')">
 
@@ -14,17 +15,20 @@
       ${structure: api.context.body}
     </p>
 
-    <h2 tal:condition="blogentries" i18n:translate="">Blog entries</h2>
-    <ul>
-      <li tal:repeat="blogentry blogentries">
+    <div tal:condition="items" class="blogentries">
+      <article tal:repeat="blogentry items">
         <h3>
           <a href="${api.url(blogentry)}" title="${blogentry.description}">
             ${blogentry.title}
           </a>
         </h3>
         <p>${structure: blogentry.body}</p>
-      </li>
-    </ul>
+        <div class="socialshareprivacy" data-uri="${api.url(blogentry)}">${api.url(blogentry)}</div>
+      </article>
+    </div>
+
+   <tal:pagination tal:condition="settings['use_batching']"
+                   metal:use-macro="macros.macros['pagination']" />
 
   </article>
 </html>

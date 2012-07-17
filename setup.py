@@ -36,6 +36,8 @@ setup(name='kotti_blog',
       zip_safe=False,
       install_requires=[
           'Kotti>=0.7a4',
+          'plone.batching',
+          'AccessControl',  # this is actually a dependency of plone.batching
       ],
       entry_points="""
       [fanstatic.libraries]

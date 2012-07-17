@@ -1,5 +1,5 @@
-kotti_calendar browser tests
-============================
+kotti_blog browser tests
+========================
 
 Setup and Login
 ---------------

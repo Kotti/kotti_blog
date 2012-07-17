@@ -1,3 +1,6 @@
+from plone.batching import Batch
+from pyramid.renderers import get_renderer
+
 from kotti import DBSession
 from kotti.views.edit import DocumentSchema
 from kotti.views.edit import generic_edit
@@ -6,8 +9,11 @@ from kotti.views.view import view_node
 from kotti.views.util import ensure_view_selector
 from kotti.views.util import template_api
 
-from kotti_blog.resources import Blog
-from kotti_blog.resources import BlogEntry
+from kotti_blog.resources import (
+    Blog,
+    BlogEntry,
+)
+from kotti_blog import blog_settings
 
 
 class BlogSchema(DocumentSchema):
@@ -39,11 +45,19 @@ def add_blogentry(context, request):
 def view_blog(context, request):
     session = DBSession()
     query = session.query(BlogEntry).filter(BlogEntry.parent_id == context.id)
-    blogentries = query.all()
-
+    items = query.all()
+    page = request.params.get('page', 1)  # TODO: settings
+    settings = blog_settings()
+    if settings['use_batching']:
+        items = Batch.fromPagenumber(items,
+                      pagesize=settings['pagesize'],
+                      pagenumber=int(page))
+    macros = get_renderer('templates/macros.pt').implementation()
     return {
         'api': template_api(context, request),
-        'blogentries': blogentries,
+        'macros': macros,
+        'items': items,
+        'settings': settings,
         }
 
 
