@@ -63,6 +63,11 @@ def add_blogentry(context, request):
     return generic_add(context, request, BlogEntrySchema(), BlogEntry, u'blogentry')
 
 
+def view_blogentry(context, request):
+    context.formatted_date = format_datetime(datetime=context.date)  # , format=format)
+    return {}
+
+
 def view_blog(context, request):
     settings = blog_settings()
     macros = get_renderer('templates/macros.pt').implementation()
@@ -131,7 +136,7 @@ def includeme_view(config):
         )
 
     config.add_view(
-        view_node,
+        view_blogentry,
         context=BlogEntry,
         name='view',
         permission='view',

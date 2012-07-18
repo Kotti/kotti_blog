@@ -4,15 +4,18 @@
       xmlns:tal="http://xml.zope.org/namespaces/tal"
       metal:use-macro="api.macro('kotti:templates/view/master.pt')">
 
-  <article metal:fill-slot="content" class="blogentry-view content">
-    <h1>${api.context.title}</h1>
-    <p class="description">
-      ${api.context.description}
-    </p>
+  <article metal:fill-slot="content" class="blogentry-view content blogentries">
 
-    <p class="body">
-      ${structure: api.context.body}
-    </p>
+    <div class="blogentry" data-uri="${api.url(context)}">
+      <span class="date" tal:content="context.formatted_date" />
+      <h1>${api.context.title}</h1>
+      <p class="description">
+        ${api.context.description}
+      </p>
+      <p class="body">
+        ${structure: api.context.body}
+      </p>
+    </div>
 
   </article>
 
