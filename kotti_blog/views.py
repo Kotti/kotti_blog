@@ -14,7 +14,7 @@ from kotti.views.view import view_node
 from kotti.views.util import (
     ensure_view_selector,
     template_api,
-    format_datetime,
+    format_date,
 )
 
 from kotti_blog.resources import (
@@ -64,7 +64,8 @@ def add_blogentry(context, request):
 
 
 def view_blogentry(context, request):
-    context.formatted_date = format_datetime(datetime=context.date)  # , format=format)
+    context.formatted_date = format_date(context.date,
+                                         format="short")
     return {}
 
 
@@ -83,7 +84,7 @@ def view_blog(context, request):
         item.formatted_date = item.date
         if item.formatted_date is None:
             item.formatted_date = item.modification_date
-        item.formatted_date = format_datetime(datetime=item.formatted_date)  # , format=format)
+        item.formatted_date = format_date(item.formatted_date)
 
     return {
         'api': template_api(context, request),
