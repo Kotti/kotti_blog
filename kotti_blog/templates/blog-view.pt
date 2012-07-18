@@ -15,9 +15,9 @@
       ${structure: api.context.body}
     </p>
 
-    <div tal:condition="items" class="items">
-      <div tal:repeat="item items" class="item">
-        <span tal:content="item.formatted_date" /><span class="socialshareprivacy" data-uri="${api.url(item)}"></span>
+    <div tal:condition="items" class="blogentries">
+      <div tal:repeat="item items" class="blogentry" data-uri="${api.url(item)}">
+        <span class="date" tal:content="item.formatted_date" />
         <h3>
           <a href="${api.url(item)}" title="${item.description}" tal:omit-tag="not: settings['link_headline_overview']">
             ${item.title}

@@ -38,6 +38,7 @@ setup(name='kotti_blog',
           'Kotti>=0.7a4',
           'plone.batching',
           'AccessControl',  # this is actually a dependency of plone.batching
+          'js.jquery_infinite_ajax_scroll',
       ],
       entry_points="""
       [fanstatic.libraries]

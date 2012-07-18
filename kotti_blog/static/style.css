@@ -1,0 +1,8 @@
+.blog-view .blogentry {
+    margin-top: 2em;
+}
+.blog-view .blogentry h3 {
+    border-top: 1px solid black;
+    margin-top: 0.75em;
+    padding-top: 0.5em;
+}
