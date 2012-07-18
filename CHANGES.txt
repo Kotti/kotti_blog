@@ -8,6 +8,8 @@ CHANGES
 - Convert SQLAlchemy tables to Declarative syntax.
 - Fix how content types appear in Add menu.
 - Document subclasses should not have duplicate 'body' field.
+- Added batching of blog entries on overview and settings for it.
+- Added dynamic batching via ajax loads.
 
 
 0.1
