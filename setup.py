@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 import sys, os
 
-version = '0.2dev'
+version = '0.2a1'
 
 tests_require = [
     'pytest',
