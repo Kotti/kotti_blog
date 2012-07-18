@@ -31,6 +31,11 @@ class BlogSchema(DocumentSchema):
     pass
 
 
+@colander.deferred
+def deferred_date_missing(node, kw):
+    return datetime.datetime.now()
+
+
 class BlogEntrySchema(DocumentSchema):
     date = colander.SchemaNode(
         colander.DateTime(),
@@ -42,7 +47,7 @@ class BlogEntrySchema(DocumentSchema):
             2012, 1, 1, 0, 0, tzinfo=colander.iso8601.Utc()),
             min_err=_('${val} is earlier than earliest datetime ${min}')),
         widget=DateTimeInputWidget(),
-        missing=None,
+        missing=deferred_date_missing,
     )
 
 
@@ -65,10 +70,7 @@ def add_blogentry(context, request):
 
 
 def view_blogentry(context, request):
-    if context.date is not None:
-        context.formatted_date = format_date(context.date)
-    else:
-        context.formatted_date = format_date(context.creation_date)
+    context.formatted_date = format_date(context.date)
     return {}
 
 
@@ -76,7 +78,8 @@ def view_blog(context, request):
     settings = blog_settings()
     macros = get_renderer('templates/macros.pt').implementation()
     session = DBSession()
-    query = session.query(BlogEntry).filter(BlogEntry.parent_id == context.id)
+    query = session.query(BlogEntry).filter(\
+                BlogEntry.parent_id == context.id).order_by(BlogEntry.date)
     items = query.all()
     page = request.params.get('page', 1)
     if settings['use_batching']:
@@ -85,10 +88,7 @@ def view_blog(context, request):
                       pagenumber=int(page))
 
     for item in items:
-        if item.date is not None:
-            item.formatted_date = format_date(item.date)
-        else:
-            item.formatted_date = format_date(item.creation_date)
+        item.formatted_date = format_date(item.date)
 
     return {
         'api': template_api(context, request),
