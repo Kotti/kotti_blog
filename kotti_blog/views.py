@@ -35,7 +35,8 @@ class BlogEntrySchema(DocumentSchema):
     date = colander.SchemaNode(
         colander.DateTime(),
         title=_(u'Date'),
-        description=_(u'Choose date of the blog entry. If you leave this empty the modification date is used.'),
+        description=_(u'Choose date of the blog entry. '\
+                      u'If you leave this empty the creation date is used.'),
         validator=colander.Range(
             min=datetime.datetime(
             2012, 1, 1, 0, 0, tzinfo=colander.iso8601.Utc()),
@@ -64,8 +65,10 @@ def add_blogentry(context, request):
 
 
 def view_blogentry(context, request):
-    context.formatted_date = format_date(context.date,
-                                         format="short")
+    if context.date is not None:
+        context.formatted_date = format_date(context.date)
+    else:
+        context.formatted_date = format_date(context.creation_date)
     return {}
 
 
@@ -80,11 +83,12 @@ def view_blog(context, request):
         items = Batch.fromPagenumber(items,
                       pagesize=settings['pagesize'],
                       pagenumber=int(page))
+
     for item in items:
-        item.formatted_date = item.date
-        if item.formatted_date is None:
-            item.formatted_date = item.modification_date
-        item.formatted_date = format_date(item.formatted_date)
+        if item.date is not None:
+            item.formatted_date = format_date(item.date)
+        else:
+            item.formatted_date = format_date(item.creation_date)
 
     return {
         'api': template_api(context, request),

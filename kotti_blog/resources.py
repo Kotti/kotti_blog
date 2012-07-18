@@ -1,28 +1,11 @@
-import datetime
-from dateutil.tz import tzutc
 from sqlalchemy import (
     Column,
     ForeignKey,
     Integer,
-    types,
+    DateTime,
 )
 from kotti.resources import Document
 from kotti_blog import _
-
-
-class UTCDateTime(types.TypeDecorator):
-
-    impl = types.DateTime
-
-    def process_bind_param(self, value, engine):
-        if value is not None:
-            return value.astimezone(tzutc())
-
-    def process_result_value(self, value, engine):
-        if value is not None:
-            return datetime.datetime(value.year, value.month, value.day,
-                            value.hour, value.minute, value.second,
-                            value.microsecond, tzinfo=tzutc())
 
 
 class Blog(Document):
@@ -38,7 +21,7 @@ class Blog(Document):
 
 class BlogEntry(Document):
     id = Column(Integer, ForeignKey('documents.id'), primary_key=True)
-    date = Column('date', UTCDateTime())
+    date = Column('date', DateTime())
 
     type_info = Document.type_info.copy(
         name=u'Blog entry',

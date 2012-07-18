@@ -38,6 +38,7 @@ Add blogentries
   >>> browser.open(tests.BASE_URL + '/new-blog/@@add_blogentry')
   >>> ctrl("Title").value = "First blog entry"
   >>> ctrl("Body").value = "And I like to say..."
+  >>> ctrl("Date").value = "2012-07-31 05:00:00"
   >>> ctrl("save").click()
   >>> "Successfully added item" in browser.contents
   True
@@ -55,6 +56,8 @@ View blog and blog entry
 
   >>> browser.open(tests.BASE_URL + '/new-blog/')
   >>> "First blog entry" in browser.contents
+  True
+  >>> "31.07.2012" in browser.contents
   True
   >>> "And I like to say..." in browser.contents
   True
