@@ -1,4 +1,5 @@
 import datetime
+from dateutil.tz import tzutc
 from plone.batching import Batch
 from pyramid.renderers import get_renderer
 import colander
@@ -10,7 +11,6 @@ from kotti.views.edit import (
     generic_edit,
     generic_add,
 )
-from kotti.views.view import view_node
 from kotti.views.util import (
     ensure_view_selector,
     template_api,
@@ -33,7 +33,9 @@ class BlogSchema(DocumentSchema):
 
 @colander.deferred
 def deferred_date_missing(node, kw):
-    return datetime.datetime.now()
+    value = datetime.datetime.now()
+    return datetime.datetime(value.year, value.month, value.day, value.hour,
+        value.minute, value.second, value.microsecond, tzinfo=tzutc())
 
 
 class BlogEntrySchema(DocumentSchema):
@@ -43,8 +45,7 @@ class BlogEntrySchema(DocumentSchema):
         description=_(u'Choose date of the blog entry. '\
                       u'If you leave this empty the creation date is used.'),
         validator=colander.Range(
-            min=datetime.datetime(
-            2012, 1, 1, 0, 0, tzinfo=colander.iso8601.Utc()),
+            min=datetime.datetime(2012, 1, 1, 0, 0, tzinfo=colander.iso8601.Utc()),
             min_err=_('${val} is earlier than earliest datetime ${min}')),
         widget=DateTimeInputWidget(),
         missing=deferred_date_missing,
