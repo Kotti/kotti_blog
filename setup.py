@@ -39,6 +39,7 @@ setup(name='kotti_blog',
           'plone.batching',
           'AccessControl',  # this is actually a dependency of plone.batching
           'js.jquery_infinite_ajax_scroll',
+          'python-dateutil',
       ],
       entry_points="""
       [fanstatic.libraries]
