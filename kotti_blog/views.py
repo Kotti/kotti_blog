@@ -80,7 +80,7 @@ def view_blog(context, request):
     macros = get_renderer('templates/macros.pt').implementation()
     session = DBSession()
     query = session.query(BlogEntry).filter(\
-                BlogEntry.parent_id == context.id).order_by(BlogEntry.date)
+                BlogEntry.parent_id == context.id).order_by(BlogEntry.date.desc())
     items = query.all()
     page = request.params.get('page', 1)
     if settings['use_batching']:
