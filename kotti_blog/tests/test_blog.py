@@ -1,14 +1,24 @@
 from pyramid.threadlocal import get_current_registry
-from kotti.testing import FunctionalTestBase
+from kotti.testing import (
+    FunctionalTestBase,
+    testing_db_url,
+)
 from kotti_blog import blog_settings
 
 
 class TestBlog(FunctionalTestBase):
 
     def setUp(self, **kwargs):
-        settings = {'kotti.configurators': 'kotti_blog.kotti_configure',
-                    'kotti_blog.blog_settings.pagesize': '5'}
-        super(TestBlog, self).setUp(**settings)
+        self.settings = {'kotti.configurators': 'kotti_blog.kotti_configure',
+                         'sqlalchemy.url': testing_db_url(),
+                         'kotti.secret': 'dude',
+                         'kotti_blog.blog_settings.pagesize': '5'}
+        super(TestBlog, self).setUp(**self.settings)
+
+    def test_asset_overrides(self):
+        from kotti import main
+        self.settings['kotti_blog.asset_overrides'] = 'kotti_blog:hello_world/'
+        main({}, **self.settings)
 
     def test_blog_default_settings(self):
         b_settings = blog_settings()

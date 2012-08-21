@@ -10,6 +10,7 @@ CHANGES
 - Document subclasses should not have duplicate 'body' field.
 - Added batching of blog entries on overview and settings for it.
 - Added dynamic batching via ajax loads.
+- Added kotti_blog.asset_overrides attribute to settings.
 
 
 0.1
