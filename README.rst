@@ -19,7 +19,6 @@ to the ``kotti.configurators`` setting in your ini file::
 
 Now you can add a blog and add blog entries to your blog.
 
-Be warned: This addon is under development. So things might be changed until a
-final version is published.
+Be warned: This addon is in alpha status. Use it at your own risk.
 
 .. _Find out more about Kotti: http://pypi.python.org/pypi/Kotti
