@@ -1,8 +1,8 @@
 CHANGES
 =======
 
-0.2
----
+0.2.1a1(2012-08-21)
+-------------------
 
 - Move to fanstatic for include static resources.
 - Convert SQLAlchemy tables to Declarative syntax.
