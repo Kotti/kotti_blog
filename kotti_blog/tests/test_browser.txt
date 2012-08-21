@@ -63,7 +63,7 @@ View blog and blog entry
   >>> "And I like to say..." in browser.contents
   True
   >>> pos = browser.contents.index
-  >>> pos("First blog entry") < pos("Second blog entry") 
+  >>> pos("Second blog entry") < pos("First blog entry")
   True
   >>> browser.getLink("Second blog entry").click()
   >>> "rumoring around a bit" in browser.contents
