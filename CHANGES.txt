@@ -1,8 +1,8 @@
 CHANGES
 =======
 
-0.2.1(Unreleased)
--------------------
+0.2.1(2012-09-04)
+-----------------
 
 - Private blog entries should not be shown in the blog overview.
 
