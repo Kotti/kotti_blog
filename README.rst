@@ -54,7 +54,5 @@ Parts of kotti_blog can be overridden with the setting
 `Kotti documentation about the asset_overrides setting`_, which is the same
 as in ``kotti_blog``.
 
-Be warned: This addon is in alpha state. Use it at your own risk.
-
 .. _Find out more about Kotti: http://pypi.python.org/pypi/Kotti
 .. _Kotti documentation about the asset_overrides setting: http://kotti.readthedocs.org/en/latest/configuration.html?highlight=asset#adjust-the-look-feel-kotti-asset-overrides
