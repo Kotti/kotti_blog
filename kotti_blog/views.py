@@ -11,6 +11,7 @@ from kotti.views.edit import (
     generic_edit,
     generic_add,
 )
+from kotti.security import has_permission
 from kotti.views.util import (
     ensure_view_selector,
     template_api,
@@ -82,6 +83,7 @@ def view_blog(context, request):
     query = session.query(BlogEntry).filter(\
                 BlogEntry.parent_id == context.id).order_by(BlogEntry.date.desc())
     items = query.all()
+    items = [item for item in items if has_permission('view', item, request)]
     page = request.params.get('page', 1)
     if settings['use_batching']:
         items = Batch.fromPagenumber(items,
