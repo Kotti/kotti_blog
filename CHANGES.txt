@@ -4,6 +4,8 @@ CHANGES
 0.3(Unreleased)
 ---------------
 
+- Refactore date formatting to have the date locale aware.
+
 
 0.2.1(2012-09-04)
 -----------------

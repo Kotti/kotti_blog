@@ -15,9 +15,7 @@ from kotti.security import has_permission
 from kotti.views.util import (
     ensure_view_selector,
     template_api,
-    format_date,
 )
-
 from kotti_blog.resources import (
     Blog,
     BlogEntry,
@@ -71,11 +69,6 @@ def add_blogentry(context, request):
     return generic_add(context, request, BlogEntrySchema(), BlogEntry, u'blogentry')
 
 
-def view_blogentry(context, request):
-    context.formatted_date = format_date(context.date)
-    return {}
-
-
 def view_blog(context, request):
     settings = blog_settings()
     macros = get_renderer('templates/macros.pt').implementation()
@@ -89,10 +82,6 @@ def view_blog(context, request):
         items = Batch.fromPagenumber(items,
                       pagesize=settings['pagesize'],
                       pagenumber=int(page))
-
-    for item in items:
-        item.formatted_date = format_date(item.date)
-
     return {
         'api': template_api(context, request),
         'macros': macros,
@@ -144,7 +133,6 @@ def includeme_view(config):
         )
 
     config.add_view(
-        view_blogentry,
         context=BlogEntry,
         name='view',
         permission='view',

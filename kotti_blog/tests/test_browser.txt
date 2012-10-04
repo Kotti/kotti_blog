@@ -58,7 +58,7 @@ View blog and blog entry
   >>> browser.open(tests.BASE_URL + '/new-blog/')
   >>> "First blog entry" in browser.contents
   True
-  >>> "31.07.2012" in browser.contents
+  >>> "Jul 31, 2012" in browser.contents
   True
   >>> "And I like to say..." in browser.contents
   True
@@ -115,3 +115,32 @@ Private blog entries should not be shown in the blog overview
   >>> "Second blog entry" in browser_anonymous.contents
   False
 
+
+Check the addon is locale aware
+-------------------------------
+
+  >>> tools_de = tests.setUpFunctional(
+  ...     **{'kotti.configurators': 'kotti_blog.kotti_configure',
+  ...        'pyramid.default_locale_name': 'de'})
+  >>> browser_de = tools_de['Browser']()
+  >>> ctrl_de = browser_de.getControl
+  >>> browser_de.open(tests.BASE_URL + '/@@login')
+  >>> ctrl_de("Benutzername oder E-Mail").value = "admin"
+  >>> ctrl_de("Passwort").value = "secret"
+  >>> ctrl_de(name="submit").click()
+
+  >>> browser_de.open(tests.BASE_URL + '/@@add_blog')
+  >>> ctrl_de("Titel").value = "Neuer Blog"
+  >>> ctrl_de("Inhalt").value = "Das ist der neue Blog"
+  >>> ctrl_de(name="save").click()
+
+  >>> browser_de.open(tests.BASE_URL + '/neuer-blog/@@add_blogentry')
+  >>> ctrl_de("Titel").value = "Erster Blogeintrag"
+  >>> ctrl_de("Inhalt").value = "Also, ich sag mal..."
+  >>> ctrl_de("Date").value = "2012-07-31 05:00:00"
+  >>> ctrl_de(name="save").click()
+
+  >>> "Jul 31, 2012" in browser_de.contents
+  False
+  >>> "31.07.2012" in browser_de.contents
+  True
