@@ -1,31 +1,48 @@
 # German translations for kotti_blog.
 # Copyright (C) 2012 ORGANIZATION
 # This file is distributed under the same license as the kotti_blog project.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2012.
+# Marco Scheidhuber <j23d@jusid.de>, 2012.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: kotti_blog 0.2dev\n"
-"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2012-07-16 10:41+0200\n"
+"Report-Msgid-Bugs-To: j23d@jusid.de\n"
+"POT-Creation-Date: 2012-10-04 14:50+0200\n"
 "PO-Revision-Date: 2012-07-16 10:39+0200\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: de <LL@li.org>\n"
+"Last-Translator: Marco Scheidhuber <j23d@jusid.de>\n"
+"Language-Team: de <j23d@jusid.de>\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 0.9.6\n"
 
-#: kotti_blog/resources.py:15
+#: kotti_blog/resources.py:32
 msgid "Blog"
 msgstr "Blog"
 
-#: kotti_blog/resources.py:26
+#: kotti_blog/resources.py:44
 msgid "Blog entry"
 msgstr "Blogeintrag"
 
-#: kotti_blog/templates/blog-view.pt:17
-msgid "Blog entries"
-msgstr "Blogeeinträge"
+#: kotti_blog/views.py:43
+msgid "Date"
+msgstr "Datum"
 
+#: kotti_blog/views.py:44
+msgid ""
+"Choose date of the blog entry. If you leave this empty the creation date "
+"is used."
+msgstr "Wählen Sie das Datum für den Blogeintrag. Wenn Sie das Feld leer lassen, wird das Datum der Erstellung genutzt."
+
+#: kotti_blog/views.py:48
+msgid "${val} is earlier than earliest datetime ${min}"
+msgstr "${val} liegt vor dem frühestmöglichen Zeitpunkt ${min}."
+
+#: kotti_blog/templates/macros.pt:15
+msgid "Previous ${number} items"
+msgstr "Vorherige  ${number} Einträge"
+
+#: kotti_blog/templates/macros.pt:41
+msgid "Next ${number} items"
+msgstr "Nächste ${number} Einträge"

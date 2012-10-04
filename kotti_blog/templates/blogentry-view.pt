@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xml:lang="en"
+      i18n:domain="kotti_blog"
       xmlns:tal="http://xml.zope.org/namespaces/tal"
       metal:use-macro="api.macro('kotti:templates/view/master.pt')">
 

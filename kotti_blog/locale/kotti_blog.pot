@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: kotti_blog 0.2dev\n"
+"Project-Id-Version: kotti_blog 0.3dev\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2012-07-16 10:41+0200\n"
+"POT-Creation-Date: 2012-10-04 14:50+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,15 +17,33 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 0.9.6\n"
 
-#: kotti_blog/resources.py:15
+#: kotti_blog/resources.py:32
 msgid "Blog"
 msgstr ""
 
-#: kotti_blog/resources.py:26
+#: kotti_blog/resources.py:44
 msgid "Blog entry"
 msgstr ""
 
-#: kotti_blog/templates/blog-view.pt:17
-msgid "Blog entries"
+#: kotti_blog/views.py:43
+msgid "Date"
+msgstr ""
+
+#: kotti_blog/views.py:44
+msgid ""
+"Choose date of the blog entry. If you leave this empty the creation date is "
+"used."
+msgstr ""
+
+#: kotti_blog/views.py:48
+msgid "${val} is earlier than earliest datetime ${min}"
+msgstr ""
+
+#: kotti_blog/templates/macros.pt:15
+msgid "Previous ${number} items"
+msgstr ""
+
+#: kotti_blog/templates/macros.pt:41
+msgid "Next ${number} items"
 msgstr ""
 
