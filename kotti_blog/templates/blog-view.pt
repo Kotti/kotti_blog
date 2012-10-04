@@ -17,7 +17,7 @@
 
     <div tal:condition="items" class="blogentries">
       <div tal:repeat="item items" class="blogentry" data-uri="${api.url(item)}">
-        <span class="date" tal:content="item.formatted_date" />
+        <span class="date" tal:content="api.format_date(item.date)" />
         <h2>
           <a href="${api.url(item)}" title="${item.description}" tal:omit-tag="not: settings['link_headline_overview']">
             ${item.title}

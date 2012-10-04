@@ -7,7 +7,7 @@
   <article metal:fill-slot="content" class="blogentry-view content blogentries">
 
     <div class="blogentry" data-uri="${api.url(context)}">
-      <span class="date" tal:content="context.formatted_date" />
+      <span class="date" tal:content="api.format_date(item.date)" />
       <h1>${api.context.title}</h1>
       <p class="description">
         ${api.context.description}
