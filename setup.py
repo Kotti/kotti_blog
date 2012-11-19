@@ -3,14 +3,6 @@ import os
 
 version = '0.3dev'
 
-tests_require = [
-    'WebTest',
-    'pytest',
-    'pytest-cov',
-    'wsgi_intercept',
-    'zope.testbrowser',
-]
-
 here = os.path.abspath(os.path.dirname(__file__))
 README = open(os.path.join(here, 'README.rst')).read()
 AUTHORS = open(os.path.join(here, 'AUTHORS.txt')).read()
@@ -48,10 +40,7 @@ setup(name='kotti_blog',
       [fanstatic.libraries]
       kotti_blog = kotti_blog:library
       """,
-      tests_require=tests_require,
-      extras_require={
-          'testing': tests_require,
-          },
+      extras_require={},
       message_extractors={'kotti_blog': [
             ('**.py', 'lingua_python', None),
             ('**.zcml', 'lingua_xml', None),
