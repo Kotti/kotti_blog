@@ -1,13 +1,17 @@
 import datetime
 from dateutil.tz import tzutc
-from plone.batching import Batch
-from pyramid.renderers import get_renderer
+
 import colander
 from deform.widget import DateTimeInputWidget
+from plone.batching import Batch
+from pyramid.renderers import get_renderer
+from pyramid.view import view_config
+from pyramid.view import view_defaults
+
 
 from kotti import DBSession
-from kotti.views.edit import DocumentSchema
 from kotti.security import has_permission
+from kotti.views.edit import DocumentSchema
 from kotti.views.form import AddFormView
 from kotti.views.form import EditFormView
 from kotti.views.util import template_api
@@ -63,25 +67,39 @@ class BlogEntryEditForm(EditFormView):
     schema_factory = BlogEntrySchema
 
 
-def view_blog(context, request):
-    settings = blog_settings()
-    macros = get_renderer('templates/macros.pt').implementation()
-    session = DBSession()
-    query = session.query(BlogEntry).filter(\
-                BlogEntry.parent_id == context.id).order_by(BlogEntry.date.desc())
-    items = query.all()
-    items = [item for item in items if has_permission('view', item, request)]
-    page = request.params.get('page', 1)
-    if settings['use_batching']:
-        items = Batch.fromPagenumber(items,
-                      pagesize=settings['pagesize'],
-                      pagenumber=int(page))
-    return {
-        'api': template_api(context, request),
-        'macros': macros,
-        'items': items,
-        'settings': settings,
-        }
+@view_defaults(name='view', permission='view')
+class Views:
+
+    def __init__(self, context, request):
+        self.context = context
+        self.request = request
+
+    @view_config(context=Blog,
+                 renderer='kotti_blog:templates/blog-view.pt')
+    def view_blog(self):
+        settings = blog_settings()
+        macros = get_renderer('templates/macros.pt').implementation()
+        session = DBSession()
+        query = session.query(BlogEntry).filter(\
+                    BlogEntry.parent_id == self.context.id).order_by(BlogEntry.date.desc())
+        items = query.all()
+        items = [item for item in items if has_permission('view', item, self.request)]
+        page = self.request.params.get('page', 1)
+        if settings['use_batching']:
+            items = Batch.fromPagenumber(items,
+                          pagesize=settings['pagesize'],
+                          pagenumber=int(page))
+        return {
+            'api': template_api(self.context, self.request),
+            'macros': macros,
+            'items': items,
+            'settings': settings,
+            }
+
+    @view_config(context=BlogEntry,
+                 renderer='kotti_blog:templates/blogentry-view.pt')
+    def view_blogentry(self):
+        return {}
 
 
 def includeme_edit(config):
@@ -117,25 +135,6 @@ def includeme_edit(config):
         )
 
 
-def includeme_view(config):
-    config.add_view(
-        view_blog,
-        context=Blog,
-        name='view',
-        permission='view',
-        renderer='templates/blog-view.pt',
-        )
-
-    config.add_view(
-        context=BlogEntry,
-        name='view',
-        permission='view',
-        renderer='templates/blogentry-view.pt',
-        )
-
-    config.add_static_view('static-kotti_blog', 'kotti_blog:static')
-
-
 def includeme(config):
     settings = config.get_settings()
     if 'kotti_blog.asset_overrides' in settings:
@@ -144,4 +143,5 @@ def includeme(config):
                          if a.strip()]:
             config.override_asset(to_override='kotti_blog', override_with=override)
     includeme_edit(config)
-    includeme_view(config)
+    config.add_static_view('static-kotti_blog', 'kotti_blog:static')
+    config.scan(__name__)
