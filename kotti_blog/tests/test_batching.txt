@@ -4,14 +4,14 @@ kotti_blog batching tests
 Setup and Login
 ---------------
 
-  >>> from kotti import tests
-  >>> tools = tests.setUpFunctional(
+  >>> from kotti import testing
+  >>> tools = testing.setUpFunctional(
   ...     **{'kotti.configurators': 'kotti_blog.kotti_configure',
   ...        'kotti_blog.blog_settings.pagesize': '2'})
   >>> browser = tools['Browser']()
   >>> ctrl = browser.getControl
 
-  >>> browser.open(tests.BASE_URL + '/@@login')
+  >>> browser.open(testing.BASE_URL + '/@@login')
   >>> "Log in" in browser.contents
   True
   >>> ctrl("Username or email").value = "admin"
@@ -23,43 +23,43 @@ Setup and Login
 Add a blog and blogentries
 --------------------------
 
-  >>> browser.open(tests.BASE_URL + '/@@add_blog')
+  >>> browser.open(testing.BASE_URL + '/@@add_blog')
   >>> ctrl("Title").value = "New Blog"
   >>> ctrl("Body").value = "This is the new blog"
   >>> ctrl("save").click()
 
-  >>> browser.open(tests.BASE_URL + '/new-blog/@@add_blogentry')
+  >>> browser.open(testing.BASE_URL + '/new-blog/@@add_blogentry')
   >>> ctrl("Title").value = "First blog entry"
   >>> ctrl("Body").value = "And I like to say..."
   >>> ctrl("save").click()
 
-  >>> browser.open(tests.BASE_URL + '/new-blog/')
+  >>> browser.open(testing.BASE_URL + '/new-blog/')
   >>> 'pagination' in browser.contents
   False
   >>> 'Next' in browser.contents
   False
 
-  >>> browser.open(tests.BASE_URL + '/new-blog/@@add_blogentry')
+  >>> browser.open(testing.BASE_URL + '/new-blog/@@add_blogentry')
   >>> ctrl("Title").value = "Second blog entry"
   >>> ctrl("Body").value = "rumoring around a bit"
   >>> ctrl("save").click()
   >>> "Successfully added item" in browser.contents
   True
 
-  >>> browser.open(tests.BASE_URL + '/new-blog/')
+  >>> browser.open(testing.BASE_URL + '/new-blog/')
   >>> 'pagination' in browser.contents
   True
   >>> 'Next' in browser.contents
   False
 
-  >>> browser.open(tests.BASE_URL + '/new-blog/@@add_blogentry')
+  >>> browser.open(testing.BASE_URL + '/new-blog/@@add_blogentry')
   >>> ctrl("Title").value = "Second blog entry"
   >>> ctrl("Body").value = "rumoring around a bit"
   >>> ctrl("save").click()
   >>> "Successfully added item" in browser.contents
   True
 
-  >>> browser.open(tests.BASE_URL + '/new-blog/')
+  >>> browser.open(testing.BASE_URL + '/new-blog/')
   >>> 'pagination' in browser.contents
   True
   >>> 'Next' in browser.contents

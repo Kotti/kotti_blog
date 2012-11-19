@@ -4,13 +4,13 @@ kotti_blog browser tests
 Setup and Login
 ---------------
 
-  >>> from kotti import tests
-  >>> tools = tests.setUpFunctional(
+  >>> from kotti import testing
+  >>> tools = testing.setUpFunctional(
   ...     **{'kotti.configurators': 'kotti_blog.kotti_configure'})
   >>> browser = tools['Browser']()
   >>> ctrl = browser.getControl
 
-  >>> browser.open(tests.BASE_URL + '/@@login')
+  >>> browser.open(testing.BASE_URL + '/@@login')
   >>> "Log in" in browser.contents
   True
   >>> ctrl("Username or email").value = "admin"
@@ -22,20 +22,20 @@ Setup and Login
 Add a blog
 ----------
 
-  >>> browser.open(tests.BASE_URL + '/@@add_blog')
+  >>> browser.open(testing.BASE_URL + '/@@add_blog')
   >>> ctrl("Title").value = "New Blog"
   >>> ctrl("Body").value = "This is the new blog"
   >>> ctrl("save").click()
   >>> "Successfully added item" in browser.contents
   True
-  >>> browser.url == tests.BASE_URL + '/new-blog/'
+  >>> browser.url == testing.BASE_URL + '/new-blog/'
   True
 
 
 Add blogentries
 ---------------
 
-  >>> browser.open(tests.BASE_URL + '/new-blog/@@add_blogentry')
+  >>> browser.open(testing.BASE_URL + '/new-blog/@@add_blogentry')
   >>> ctrl("Title").value = "First blog entry"
   >>> ctrl("Body").value = "And I like to say..."
   >>> ctrl("Date").value = "2012-07-31 05:00:00"
@@ -43,7 +43,7 @@ Add blogentries
   >>> "Successfully added item" in browser.contents
   True
 
-  >>> browser.open(tests.BASE_URL + '/new-blog/@@add_blogentry')
+  >>> browser.open(testing.BASE_URL + '/new-blog/@@add_blogentry')
   >>> ctrl("Title").value = "Second blog entry"
   >>> ctrl("Body").value = "rumoring around a bit"
   >>> ctrl("Date").value = "2012-07-31 06:00:00"
@@ -55,7 +55,7 @@ Add blogentries
 View blog and blog entry
 ------------------------
 
-  >>> browser.open(tests.BASE_URL + '/new-blog/')
+  >>> browser.open(testing.BASE_URL + '/new-blog/')
   >>> "First blog entry" in browser.contents
   True
   >>> "Jul 31, 2012" in browser.contents
@@ -73,16 +73,16 @@ View blog and blog entry
 Edit blog and blog entry and verify the changes
 -----------------------------------------------
 
-  >>> browser.open(tests.BASE_URL + '/new-blog/@@edit')
+  >>> browser.open(testing.BASE_URL + '/new-blog/@@edit')
   >>> ctrl("Title").value = "This is the Blog"
   >>> ctrl("Body").value = "Hello, I am a blog"
   >>> ctrl("save").click()
 
-  >>> browser.open(tests.BASE_URL + '/new-blog/first-blog-entry/@@edit')
+  >>> browser.open(testing.BASE_URL + '/new-blog/first-blog-entry/@@edit')
   >>> ctrl("Title").value = "I was the first blog entry"
   >>> ctrl("save").click()
 
-  >>> browser.open(tests.BASE_URL + '/new-blog/')
+  >>> browser.open(testing.BASE_URL + '/new-blog/')
   >>> "Hello, I am a blog" in browser.contents
   True
   >>> "First blog entry" in browser.contents
@@ -96,10 +96,10 @@ Edit blog and blog entry and verify the changes
 Private blog entries should not be shown in the blog overview
 -------------------------------------------------------------
 
-  >>> browser.open(tests.BASE_URL + '/new-blog/')
+  >>> browser.open(testing.BASE_URL + '/new-blog/')
   >>> browser.getLink("Make Public").click()
   >>> browser_anonymous = tools['Browser']()
-  >>> browser_anonymous.open(tests.BASE_URL + '/new-blog/')
+  >>> browser_anonymous.open(testing.BASE_URL + '/new-blog/')
   >>> "Hello, I am a blog" in browser_anonymous.contents
   True
   >>> "I was the first blog entry" in browser_anonymous.contents
@@ -107,9 +107,9 @@ Private blog entries should not be shown in the blog overview
   >>> "Second blog entry" in browser_anonymous.contents
   False
 
-  >>> browser.open(tests.BASE_URL + '/new-blog/first-blog-entry')
+  >>> browser.open(testing.BASE_URL + '/new-blog/first-blog-entry')
   >>> browser.getLink("Make Public").click()
-  >>> browser_anonymous.open(tests.BASE_URL + '/new-blog/')
+  >>> browser_anonymous.open(testing.BASE_URL + '/new-blog/')
   >>> "I was the first blog entry" in browser_anonymous.contents
   True
   >>> "Second blog entry" in browser_anonymous.contents
@@ -119,22 +119,22 @@ Private blog entries should not be shown in the blog overview
 Check the addon is locale aware
 -------------------------------
 
-  >>> tools_de = tests.setUpFunctional(
+  >>> tools_de = testing.setUpFunctional(
   ...     **{'kotti.configurators': 'kotti_blog.kotti_configure',
   ...        'pyramid.default_locale_name': 'de'})
   >>> browser_de = tools_de['Browser']()
   >>> ctrl_de = browser_de.getControl
-  >>> browser_de.open(tests.BASE_URL + '/@@login')
+  >>> browser_de.open(testing.BASE_URL + '/@@login')
   >>> ctrl_de("Benutzername oder E-Mail").value = "admin"
   >>> ctrl_de("Passwort").value = "secret"
   >>> ctrl_de(name="submit").click()
 
-  >>> browser_de.open(tests.BASE_URL + '/@@add_blog')
+  >>> browser_de.open(testing.BASE_URL + '/@@add_blog')
   >>> ctrl_de("Titel").value = "Neuer Blog"
   >>> ctrl_de("Inhalt").value = "Das ist der neue Blog"
   >>> ctrl_de(name="save").click()
 
-  >>> browser_de.open(tests.BASE_URL + '/neuer-blog/@@add_blogentry')
+  >>> browser_de.open(testing.BASE_URL + '/neuer-blog/@@add_blogentry')
   >>> ctrl_de("Titel").value = "Erster Blogeintrag"
   >>> ctrl_de("Inhalt").value = "Also, ich sag mal..."
   >>> ctrl_de("Date").value = "2012-07-31 05:00:00"

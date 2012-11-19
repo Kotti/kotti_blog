@@ -4,8 +4,11 @@ import os
 version = '0.3dev'
 
 tests_require = [
+    'WebTest',
     'pytest',
     'pytest-cov',
+    'wsgi_intercept',
+    'zope.testbrowser',
 ]
 
 here = os.path.abspath(os.path.dirname(__file__))
@@ -35,7 +38,7 @@ setup(name='kotti_blog',
       include_package_data=True,
       zip_safe=False,
       install_requires=[
-          'Kotti>=0.7',
+          'Kotti>=0.8a1',
           'plone.batching',
           'AccessControl',  # this is actually a dependency of plone.batching
           'js.jquery_infinite_ajax_scroll',
