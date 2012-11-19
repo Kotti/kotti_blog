@@ -6,24 +6,16 @@ import colander
 from deform.widget import DateTimeInputWidget
 
 from kotti import DBSession
-from kotti.views.edit import (
-    DocumentSchema,
-    generic_edit,
-    generic_add,
-)
+from kotti.views.edit import DocumentSchema
 from kotti.security import has_permission
-from kotti.views.util import (
-    ensure_view_selector,
-    template_api,
-)
-from kotti_blog.resources import (
-    Blog,
-    BlogEntry,
-)
-from kotti_blog import (
-    blog_settings,
-    _,
-)
+from kotti.views.form import AddFormView
+from kotti.views.form import EditFormView
+from kotti.views.util import template_api
+
+from kotti_blog.resources import Blog
+from kotti_blog.resources import BlogEntry
+from kotti_blog import blog_settings
+from kotti_blog import _
 
 
 class BlogSchema(DocumentSchema):
@@ -51,22 +43,24 @@ class BlogEntrySchema(DocumentSchema):
     )
 
 
-@ensure_view_selector
-def edit_blog(context, request):
-    return generic_edit(context, request, BlogSchema())
+class BlogAddForm(AddFormView):
+    schema_factory = BlogSchema
+    add = Blog
+    item_type = _(u"Blog")
 
 
-def add_blog(context, request):
-    return generic_add(context, request, BlogSchema(), Blog, u'blog')
+class BlogEditForm(EditFormView):
+    schema_factory = BlogSchema
 
 
-@ensure_view_selector
-def edit_blogentry(context, request):
-    return generic_edit(context, request, BlogEntrySchema())
+class BlogEntryAddForm(AddFormView):
+    schema_factory = BlogEntrySchema
+    add = BlogEntry
+    item_type = _(u"Blog Entry")
 
 
-def add_blogentry(context, request):
-    return generic_add(context, request, BlogEntrySchema(), BlogEntry, u'blogentry')
+class BlogEntryEditForm(EditFormView):
+    schema_factory = BlogEntrySchema
 
 
 def view_blog(context, request):
@@ -93,7 +87,14 @@ def view_blog(context, request):
 def includeme_edit(config):
 
     config.add_view(
-        edit_blog,
+        BlogAddForm,
+        name=Blog.type_info.add_view,
+        permission='add',
+        renderer='kotti:templates/edit/node.pt',
+        )
+
+    config.add_view(
+        BlogEditForm,
         context=Blog,
         name='edit',
         permission='edit',
@@ -101,24 +102,17 @@ def includeme_edit(config):
         )
 
     config.add_view(
-        add_blog,
-        name=Blog.type_info.add_view,
+        BlogEntryAddForm,
+        name=BlogEntry.type_info.add_view,
         permission='add',
         renderer='kotti:templates/edit/node.pt',
         )
 
     config.add_view(
-        edit_blogentry,
+        BlogEntryEditForm,
         context=BlogEntry,
         name='edit',
         permission='edit',
-        renderer='kotti:templates/edit/node.pt',
-        )
-
-    config.add_view(
-        add_blogentry,
-        name=BlogEntry.type_info.add_view,
-        permission='add',
         renderer='kotti:templates/edit/node.pt',
         )
 
