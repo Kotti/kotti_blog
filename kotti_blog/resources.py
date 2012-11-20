@@ -1,11 +1,10 @@
 import datetime
 from dateutil.tz import tzutc
-from sqlalchemy import (
-    Column,
-    ForeignKey,
-    Integer,
-    types,
-)
+from sqlalchemy import Column
+from sqlalchemy import ForeignKey
+from sqlalchemy import Integer
+from sqlalchemy import types
+
 from kotti.resources import Document
 from kotti_blog import _
 
