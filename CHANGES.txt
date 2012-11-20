@@ -9,7 +9,8 @@ CHANGES
   are not backward compatibel. If you want to use kotti_blog
   with Kotti<=0.7.x then pin kotti_blog to 0.2.1.
   - Use form classes for the form views instead of deprecated generic functions.
-  - 
+  - Move fanstatic library to fanstatic.py.
+- Added minified style and JavaScript.
 - Use view_config decoration for views.
 
 
