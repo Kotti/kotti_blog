@@ -47,7 +47,7 @@ setup(name='kotti_blog',
       ],
       entry_points="""
       [fanstatic.libraries]
-      kotti_blog = kotti_blog:library
+      kotti_blog = kotti_blog.fanstatic:library
       """,
       extras_require={},
       message_extractors={'kotti_blog': [

@@ -1,28 +1,7 @@
-from fanstatic import (
-    Library,
-    Resource,
-    Group,
-    )
 from pyramid.i18n import TranslationStringFactory
-from kotti.static import view_needed
 from kotti.util import extract_from_settings
-from js.jquery_infinite_ajax_scroll import (
-    jquery_infinite_ajax_scroll,
-    jquery_infinite_ajax_scroll_css,
-)
 
 _ = TranslationStringFactory('kotti_blog')
-
-library = Library("kotti_blog", "static")
-kotti_blog_css = Resource(library,
-    "style.css",
-    depends=[jquery_infinite_ajax_scroll_css, ],
-    bottom=True)
-kotti_blog_js = Resource(library,
-    "kotti_blog.js",
-    depends=[jquery_infinite_ajax_scroll, ],
-    bottom=True)
-view_needed.add(Group([kotti_blog_css, kotti_blog_js, ]))
 
 
 def kotti_configure(settings):
@@ -57,4 +36,5 @@ def blog_settings(name=''):
         settings['pagesize'] = 5
     settings['use_auto_batching'] = check_true(settings['use_auto_batching'])
     settings['link_headline_overview'] = check_true(settings['link_headline_overview'])
+
     return settings
