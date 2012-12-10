@@ -8,7 +8,7 @@ from fanstatic import Resource
 from js.jquery_infinite_ajax_scroll import jquery_infinite_ajax_scroll
 from js.jquery_infinite_ajax_scroll import jquery_infinite_ajax_scroll_css
 
-from kotti.static import view_needed
+from kotti.fanstatic import view_needed
 
 
 library = Library("kotti_blog", "static")
