@@ -3,7 +3,6 @@ from dateutil.tz import tzutc
 
 import colander
 from deform.widget import DateTimeInputWidget
-from plone.batching import Batch
 from pyramid.renderers import get_renderer
 from pyramid.view import view_config
 from pyramid.view import view_defaults
@@ -16,6 +15,7 @@ from kotti.views.form import AddFormView
 from kotti.views.form import EditFormView
 from kotti.views.util import template_api
 
+from kotti_blog.batch import Batch
 from kotti_blog.resources import Blog
 from kotti_blog.resources import BlogEntry
 from kotti_blog import blog_settings

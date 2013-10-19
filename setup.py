@@ -39,9 +39,7 @@ setup(name='kotti_blog',
       include_package_data=True,
       zip_safe=False,
       install_requires=[
-          'Kotti>=0.8a1',
-          'plone.batching',
-          'AccessControl',  # this is actually a dependency of plone.batching
+          'Kotti',
           'js.jquery_infinite_ajax_scroll',
           'python-dateutil',
       ],
