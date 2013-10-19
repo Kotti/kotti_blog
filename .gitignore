@@ -11,6 +11,7 @@ parts
 bin
 include
 lib
+local
 var
 sdist
 develop-eggs
