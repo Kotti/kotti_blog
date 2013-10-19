@@ -43,7 +43,7 @@ Add a blog and blogentries
   >>> ctrl("Title").value = "Second blog entry"
   >>> ctrl("Body").value = "rumoring around a bit"
   >>> ctrl("save").click()
-  >>> "Successfully added item" in browser.contents
+  >>> "Item was added" in browser.contents
   True
 
   >>> browser.open(testing.BASE_URL + '/new-blog/')
@@ -56,7 +56,7 @@ Add a blog and blogentries
   >>> ctrl("Title").value = "Second blog entry"
   >>> ctrl("Body").value = "rumoring around a bit"
   >>> ctrl("save").click()
-  >>> "Successfully added item" in browser.contents
+  >>> "Item was added" in browser.contents
   True
 
   >>> browser.open(testing.BASE_URL + '/new-blog/')
