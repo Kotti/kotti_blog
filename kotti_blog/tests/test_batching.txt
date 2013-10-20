@@ -5,9 +5,10 @@ Setup and Login
 ---------------
 
   >>> from kotti import testing
+  >>> from kotti_settings.util import set_setting
   >>> tools = testing.setUpFunctional(
   ...     **{'kotti.configurators': 'kotti_blog.kotti_configure',
-  ...        'kotti_blog.blog_settings.pagesize': '2'})
+  ...        'kotti.populators': 'kotti.testing._populator kotti_blog.populate.populate_settings'})
   >>> browser = tools['Browser']()
   >>> ctrl = browser.getControl
 
@@ -19,6 +20,7 @@ Setup and Login
   >>> ctrl(name="submit").click()
   >>> "Welcome, Administrator" in browser.contents
   True
+  >>> set_setting('kotti_blog-pagesize', 2)
 
 Add a blog and blogentries
 --------------------------

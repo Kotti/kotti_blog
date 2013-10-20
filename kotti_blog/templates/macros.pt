@@ -6,6 +6,7 @@
       metal:use-macro="api.macro('kotti:templates/view/master.pt')">
 
 <tal:pagination metal:define-macro="pagination">
+
     <div class="pagination"
          tal:define="url api.url(context);
                      batch items"
@@ -27,7 +28,7 @@
             <a href="#" tal:content="batch.pagenumber">Current page number</a>
         </li>
         <li tal:repeat="page batch.next_pages">
-          <a href="" tal:content="page" 
+          <a href="" tal:content="page"
              tal:attributes="href string:${url}?page=${page}"/>
         </li>
         <li tal:condition="batch.show_link_to_last">

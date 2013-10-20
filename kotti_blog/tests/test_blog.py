@@ -1,54 +1,29 @@
-from pyramid.threadlocal import get_current_registry
-from kotti.testing import (
-    FunctionalTestBase,
-    testing_db_url,
-)
-from kotti_blog import blog_settings
 
 
-class TestBlog(FunctionalTestBase):
+def test_blog_view(kotti_blog_populate_settings,
+                   db_session, dummy_request):
+    from kotti.resources import get_root
+    from kotti_blog.resources import Blog, BlogEntry
+    from kotti_blog.views import Views
 
-    def setUp(self, **kwargs):
-        self.settings = {'kotti.configurators': 'kotti_blog.kotti_configure',
-                         'sqlalchemy.url': testing_db_url(),
-                         'kotti.secret': 'dude',
-                         'kotti_blog.blog_settings.pagesize': '5'}
-        super(TestBlog, self).setUp(**self.settings)
+    root = get_root()
+    root['blog'] = Blog(u'Blog')
+    root['blog']['a'] = BlogEntry()
+    root['blog']['b'] = BlogEntry()
+    view = Views(root['blog'], dummy_request)
+    result = view.view_blog()
 
-    def test_asset_overrides(self):
-        from kotti import main
-        self.settings['kotti_blog.asset_overrides'] = 'kotti_blog:hello_world/'
-        main({}, **self.settings)
+    assert result['macros'] is not None
+    assert result['use_pagination'] is True
+    assert result['api'] is not None
+    assert result['link_headline'] is True
+    assert len(result['items']) == 2
 
-    def test_blog_default_settings(self):
-        b_settings = blog_settings()
-        assert b_settings['use_batching'] == True
-        assert b_settings['pagesize'] == 5
-        assert b_settings['use_auto_batching'] == True
-        assert b_settings['link_headline_overview'] == True
 
-    def test_blog_change_settings(self):
-        settings = get_current_registry().settings
-        settings['kotti_blog.blog_settings.use_batching'] = u'false'
-        settings['kotti_blog.blog_settings.pagesize'] = u'2'
-        settings['kotti_blog.blog_settings.use_auto_batching'] = u'false'
-        settings['kotti_blog.blog_settings.link_headline_overview'] = u'false'
+def test_use_auto_pagination_view(kotti_blog_populate_settings,
+                                  db_session, dummy_request):
+    from kotti.resources import get_root
+    from kotti_blog.views import use_auto_pagination
 
-        b_settings = blog_settings()
-        assert b_settings['use_batching'] == False
-        assert b_settings['pagesize'] == 2
-        assert b_settings['use_auto_batching'] == False
-        assert b_settings['link_headline_overview'] == False
-
-    def test_blog_wrong_settings(self):
-        settings = get_current_registry().settings
-        settings['kotti_blog.blog_settings.use_batching'] = u'blibs'
-        settings['kotti_blog.blog_settings.pagesize'] = u'blabs'
-        settings['kotti_blog.blog_settings.use_auto_batching'] = u'blubs'
-        settings['kotti_blog.blog_settings.link_headline_overview'] = u'blobs'
-
-        b_settings = blog_settings()
-        assert b_settings['use_batching'] == False
-        assert b_settings['pagesize'] == 5
-        assert b_settings['use_auto_batching'] == False
-        assert b_settings['link_headline_overview'] == False
+    result = use_auto_pagination(get_root(), dummy_request)
+    assert result['use_auto_pagination'] is False

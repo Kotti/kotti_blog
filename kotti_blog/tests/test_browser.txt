@@ -6,7 +6,8 @@ Setup and Login
 
   >>> from kotti import testing
   >>> tools = testing.setUpFunctional(
-  ...     **{'kotti.configurators': 'kotti_blog.kotti_configure'})
+  ...     **{'kotti.configurators': 'kotti_blog.kotti_configure',
+  ...        'kotti.populators': 'kotti.testing._populator kotti_blog.populate.populate_settings'})
   >>> browser = tools['Browser']()
   >>> ctrl = browser.getControl
 

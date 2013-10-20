@@ -12,14 +12,18 @@ from kotti.fanstatic import view_needed
 
 
 library = Library("kotti_blog", "static")
-kotti_blog_css = Resource(library,
+kotti_blog_css = Resource(
+    library,
     "style.css",
     depends=[jquery_infinite_ajax_scroll_css, ],
     minified='style.min.css',
-    bottom=True)
-kotti_blog_js = Resource(library,
+    bottom=True
+)
+kotti_blog_js = Resource(
+    library,
     "kotti_blog.js",
     depends=[jquery_infinite_ajax_scroll, ],
     minified='kotti_blog.min.js',
-    bottom=True)
+    bottom=True
+)
 view_needed.add(Group([kotti_blog_css, kotti_blog_js, ]))

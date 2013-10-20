@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kotti_blog 0.2dev\n"
 "Report-Msgid-Bugs-To: j23d@jusid.de\n"
-"POT-Creation-Date: 2012-10-04 14:50+0200\n"
+"POT-Creation-Date: 2013-10-20 01:19+0200\n"
 "PO-Revision-Date: 2012-07-16 10:41+0200\n"
 "Last-Translator: Marco Scheidhuber <j23d@jusid.de>\n"
 "Language-Team: en <j23d@jusid.de>\n"
@@ -17,33 +17,87 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 0.9.6\n"
 
-#: kotti_blog/resources.py:32
+#: kotti_blog/populate.py:9
+msgid "Use pagination"
+msgstr "Use pagination"
+
+#: kotti_blog/populate.py:10
+msgid "Use pagination for entries on the blog."
+msgstr "Use pagination for entries on the blog."
+
+#: kotti_blog/populate.py:17
+msgid "Page size"
+msgstr "Page size"
+
+#: kotti_blog/populate.py:18
+msgid "Choose how many blog entries are shown on one page."
+msgstr "Choose how many blog entries are shown on one page."
+
+#: kotti_blog/populate.py:25
+msgid "Use auto pagination"
+msgstr "Use auto pagination"
+
+#: kotti_blog/populate.py:26
+msgid "Blog entries loaded automatically when scrolling down the blog page."
+msgstr "Blog entries loaded automatically when scrolling down the blog page."
+
+#: kotti_blog/populate.py:34
+msgid "Link headline"
+msgstr "Link headline"
+
+#: kotti_blog/populate.py:35
+msgid ""
+"Control wether the headline of a blog entry in the blog is linked to the "
+"blog entry."
+msgstr ""
+"Control wether the headline of a blog entry in the blog is linked to the "
+"blog entry."
+
+#: kotti_blog/populate.py:50
+msgid "Blog settings"
+msgstr "Blog settings"
+
+#: kotti_blog/populate.py:51
+msgid "Settings for kotti_blog"
+msgstr "Settings for kotti_blog"
+
+#: kotti_blog/populate.py:52
+msgid "Successfully saved blog settings."
+msgstr "Successfully saved blog settings."
+
+#: kotti_blog/resources.py:31 kotti_blog/views.py:54
 msgid "Blog"
 msgstr "Blog"
 
-#: kotti_blog/resources.py:44
+#: kotti_blog/resources.py:43
 msgid "Blog entry"
 msgstr "Blog entry"
 
-#: kotti_blog/views.py:43
+#: kotti_blog/views.py:40
 msgid "Date"
 msgstr "Date"
 
-#: kotti_blog/views.py:44
+#: kotti_blog/views.py:41
 msgid ""
 "Choose date of the blog entry. If you leave this empty the creation date "
 "is used."
-msgstr "Choose date of the blog entry. If you leave this empty the creation date is used."
+msgstr ""
+"Choose date of the blog entry. If you leave this empty the creation date "
+"is used."
 
-
-#: kotti_blog/views.py:48
+#: kotti_blog/views.py:45
 msgid "${val} is earlier than earliest datetime ${min}"
 msgstr "${val} is earlier than earliest datetime ${min}"
 
-#: kotti_blog/templates/macros.pt:15
+#: kotti_blog/views.py:64
+msgid "Blog Entry"
+msgstr "Blog entry"
+
+#: kotti_blog/templates/macros.pt:16
 msgid "Previous ${number} items"
 msgstr "Previous ${number} items"
 
-#: kotti_blog/templates/macros.pt:41
+#: kotti_blog/templates/macros.pt:42
 msgid "Next ${number} items"
 msgstr "Next ${number} items"
+

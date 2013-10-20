@@ -15,10 +15,11 @@ from kotti.views.form import AddFormView
 from kotti.views.form import EditFormView
 from kotti.views.util import template_api
 
+from kotti_settings.util import get_setting
+
 from kotti_blog.batch import Batch
 from kotti_blog.resources import Blog
 from kotti_blog.resources import BlogEntry
-from kotti_blog import blog_settings
 from kotti_blog import _
 
 
@@ -29,7 +30,8 @@ class BlogSchema(DocumentSchema):
 @colander.deferred
 def deferred_date_missing(node, kw):
     value = datetime.datetime.now()
-    return datetime.datetime(value.year, value.month, value.day, value.hour,
+    return datetime.datetime(
+        value.year, value.month, value.day, value.hour,
         value.minute, value.second, value.microsecond, tzinfo=tzutc())
 
 
@@ -37,10 +39,11 @@ class BlogEntrySchema(DocumentSchema):
     date = colander.SchemaNode(
         colander.DateTime(),
         title=_(u'Date'),
-        description=_(u'Choose date of the blog entry. '\
+        description=_(u'Choose date of the blog entry. '
                       u'If you leave this empty the creation date is used.'),
         validator=colander.Range(
-            min=datetime.datetime(2012, 1, 1, 0, 0, tzinfo=colander.iso8601.Utc()),
+            min=datetime.datetime(
+                2012, 1, 1, 0, 0, tzinfo=colander.iso8601.Utc()),
             min_err=_('${val} is earlier than earliest datetime ${min}')),
         widget=DateTimeInputWidget(),
         missing=deferred_date_missing,
@@ -77,29 +80,37 @@ class Views:
     @view_config(context=Blog,
                  renderer='kotti_blog:templates/blog-view.pt')
     def view_blog(self):
-        settings = blog_settings()
         macros = get_renderer('templates/macros.pt').implementation()
-        session = DBSession()
-        query = session.query(BlogEntry).filter(\
-                    BlogEntry.parent_id == self.context.id).order_by(BlogEntry.date.desc())
+        query = DBSession.query(BlogEntry)
+        query = query.filter(BlogEntry.parent_id == self.context.id)
+        query = query.order_by(BlogEntry.date.desc())
         items = query.all()
         items = [item for item in items if has_permission('view', item, self.request)]
         page = self.request.params.get('page', 1)
-        if settings['use_batching']:
+        use_pagination = get_setting('use_pagination')
+        if use_pagination:
             items = Batch.fromPagenumber(items,
-                          pagesize=settings['pagesize'],
-                          pagenumber=int(page))
+                        pagesize=get_setting('pagesize'),
+                        pagenumber=int(page))
         return {
             'api': template_api(self.context, self.request),
             'macros': macros,
             'items': items,
-            'settings': settings,
+            'use_pagination': use_pagination,
+            'link_headline': get_setting('link_headline'),
             }
 
     @view_config(context=BlogEntry,
                  renderer='kotti_blog:templates/blogentry-view.pt')
     def view_blogentry(self):
         return {}
+
+
+@view_config(name='kotti_blog_use_auto_pagination',
+             permission='edit',
+             renderer='json')
+def use_auto_pagination(context, request):
+    return {'use_auto_pagination': get_setting('use_auto_pagination')}
 
 
 def includeme_edit(config):
