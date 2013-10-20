@@ -1,7 +1,7 @@
 CHANGES
 =======
 
-0.4(Unreleased)
+0.4(2013-10-20)
 ---------------
 
 - Include batch functionality from plone.batching and remove this dependency.
