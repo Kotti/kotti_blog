@@ -32,7 +32,7 @@ class UseAutoPaginationSchemaNode(colander.SchemaNode):
 class LinkHeadlineSchemaNode(colander.SchemaNode):
     name = 'link_headline'
     title = _(u'Link headline')
-    description = _(u'Control wether the headline of a blog entry in '
+    description = _(u'Control whether the headline of a blog entry in '
                     u'the blog is linked to the blog entry.')
     missing = True
     default = True
