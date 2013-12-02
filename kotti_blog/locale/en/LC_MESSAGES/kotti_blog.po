@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kotti_blog 0.2dev\n"
 "Report-Msgid-Bugs-To: j23d@jusid.de\n"
-"POT-Creation-Date: 2013-10-20 01:19+0200\n"
+"POT-Creation-Date: 2013-11-27 14:02+0000\n"
 "PO-Revision-Date: 2012-07-16 10:41+0200\n"
 "Last-Translator: Marco Scheidhuber <j23d@jusid.de>\n"
 "Language-Team: en <j23d@jusid.de>\n"
@@ -15,7 +15,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 0.9.6\n"
+"Generated-By: Babel 1.3\n"
 
 #: kotti_blog/populate.py:9
 msgid "Use pagination"
@@ -47,11 +47,11 @@ msgstr "Link headline"
 
 #: kotti_blog/populate.py:35
 msgid ""
-"Control wether the headline of a blog entry in the blog is linked to the "
-"blog entry."
+"Control whether the headline of a blog entry in the blog is linked to the"
+" blog entry."
 msgstr ""
-"Control wether the headline of a blog entry in the blog is linked to the "
-"blog entry."
+"Control whether the headline of a blog entry in the blog is linked to the"
+" blog entry."
 
 #: kotti_blog/populate.py:50
 msgid "Blog settings"
@@ -65,7 +65,7 @@ msgstr "Settings for kotti_blog"
 msgid "Successfully saved blog settings."
 msgstr "Successfully saved blog settings."
 
-#: kotti_blog/resources.py:31 kotti_blog/views.py:54
+#: kotti_blog/resources.py:31 kotti_blog/views.py:56
 msgid "Blog"
 msgstr "Blog"
 
@@ -73,11 +73,11 @@ msgstr "Blog"
 msgid "Blog entry"
 msgstr "Blog entry"
 
-#: kotti_blog/views.py:40
+#: kotti_blog/views.py:41
 msgid "Date"
 msgstr "Date"
 
-#: kotti_blog/views.py:41
+#: kotti_blog/views.py:42
 msgid ""
 "Choose date of the blog entry. If you leave this empty the creation date "
 "is used."
@@ -85,11 +85,11 @@ msgstr ""
 "Choose date of the blog entry. If you leave this empty the creation date "
 "is used."
 
-#: kotti_blog/views.py:45
+#: kotti_blog/views.py:47
 msgid "${val} is earlier than earliest datetime ${min}"
 msgstr "${val} is earlier than earliest datetime ${min}"
 
-#: kotti_blog/views.py:64
+#: kotti_blog/views.py:66
 msgid "Blog Entry"
 msgstr "Blog entry"
 
