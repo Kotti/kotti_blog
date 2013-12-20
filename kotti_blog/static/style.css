@@ -1,9 +1,18 @@
 .blog-view .blogentry {
     margin-top: 2em;
 }
-.blogentry-view h1,
 .blog-view .blogentry h2 {
     border-top: 1px solid black;
     margin-top: 0.75em;
     padding-top: 0.5em;
+}
+.blogentry-view h1 {
+    margin-top: 0.5em;
+}
+.blogentry-view .description {
+    font-style: italic;
+}
+.blogentry-view .blog-metadata {
+    margin-bottom: 20px;
+    border-bottom: 1px solid #EEE;
 }

@@ -8,8 +8,15 @@
   <article metal:fill-slot="content" class="blogentry-view content blogentries">
 
     <div class="blogentry" data-uri="${api.url(context)}">
-      <span class="date" tal:content="api.format_date(context.date)" />
       <h1>${api.context.title}</h1>
+      <div class="blog-metadata">
+        <span class="date" tal:content="api.format_datetime(context.date, 'MMM dd, yyyy \'at\' HH:mm')" />
+        | tags:
+        <span class="tags">
+          <tal:block tal:repeat="tag context.tags">
+          <a href="${api.url(context.parent)}?selected-tag=${tag}">${tag}</a><tal:block tal:condition="not: repeat.tag.end">,</tal:block>
+          </tal:block></span>
+      </div>
       <p class="description">
         ${api.context.description}
       </p>
