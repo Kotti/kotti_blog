@@ -81,6 +81,9 @@ class Views:
     @view_config(context=Blog,
                  renderer='kotti_blog:templates/blog-view.pt')
     def view_blog(self):
+        selected_tag = self.request.GET.get("selected-tag")
+        selected_date = self.request.GET.get("selected-date")
+
         macros = get_renderer('templates/macros.pt').implementation()
         query = DBSession.query(BlogEntry)
         query = query.filter(BlogEntry.parent_id == self.context.id)
@@ -88,9 +91,16 @@ class Views:
         items = query.all()
         items = [item for item in items if has_permission('view', item, self.request)]
 
-        selected_tag = self.request.GET.get("selected-tag")
+        get = ''
+
+        if selected_date:
+            get = '&selected-date=' + selected_date
+            year, month = map(int, selected_date.split('_'))
+            items = [it for it in items
+                     if it.date.year == year and it.date.month == month]
 
         if selected_tag:
+            get = '&selected-tag=' + selected_tag
             # items = [it for it in items if any([i in it.tags for i in selected_tag])]
             items = [it for it in items if selected_tag in it.tags]
 
@@ -106,6 +116,7 @@ class Views:
             'items': items,
             'use_pagination': use_pagination,
             'link_headline': get_setting('link_headline'),
+            'get': get,
             }
 
     @view_config(context=BlogEntry,
