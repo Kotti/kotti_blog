@@ -9,10 +9,11 @@
 .blogentry-view h1 {
     margin-top: 0.5em;
 }
+.blog-view .description,
 .blogentry-view .description {
     font-style: italic;
 }
-.blogentry-view .blog-metadata {
+.blog-metadata {
     margin-bottom: 20px;
     border-bottom: 1px solid #EEE;
 }

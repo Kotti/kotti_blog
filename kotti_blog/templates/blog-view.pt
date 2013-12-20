@@ -17,12 +17,19 @@
 
     <div tal:condition="items" class="blogentries">
       <div tal:repeat="item items" class="blogentry" data-uri="${api.url(item)}">
-        <span class="date" tal:content="api.format_date(item.date)" />
         <h2>
           <a href="${api.url(item)}" title="${item.description}" tal:omit-tag="not: link_headline">
             ${item.title}
           </a>
         </h2>
+        <div class="blog-metadata">
+          <span class="date" tal:content="api.format_datetime(item.date, 'MMM dd, yyyy \'at\' HH:mm')" />
+          | tags:
+          <span class="tags">
+            <tal:block tal:repeat="tag item.tags">
+            <a href="${api.url(context)}?selected-tag=${tag}">${tag}</a><tal:block tal:condition="not: repeat.tag.end">,</tal:block>
+            </tal:block></span>
+        </div>
         <p>${structure: item.body}</p>
       </div>
     </div>
