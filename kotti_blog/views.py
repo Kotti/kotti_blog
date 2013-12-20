@@ -6,7 +6,7 @@ from deform.widget import DateTimeInputWidget
 from pyramid.renderers import get_renderer
 from pyramid.view import view_config
 from pyramid.view import view_defaults
-
+from pyramid.exceptions import PredicateMismatch
 
 from kotti import DBSession
 from kotti.security import has_permission
@@ -14,6 +14,7 @@ from kotti.views.edit import DocumentSchema
 from kotti.views.form import AddFormView
 from kotti.views.form import EditFormView
 from kotti.views.util import template_api
+from kotti.views.slots import assign_slot
 
 from kotti_settings.util import get_setting
 
@@ -86,6 +87,13 @@ class Views:
         query = query.order_by(BlogEntry.date.desc())
         items = query.all()
         items = [item for item in items if has_permission('view', item, self.request)]
+
+        selected_tag = self.request.GET.get("selected-tag")
+
+        if selected_tag:
+            # items = [it for it in items if any([i in it.tags for i in selected_tag])]
+            items = [it for it in items if selected_tag in it.tags]
+
         page = self.request.params.get('page', 1)
         use_pagination = get_setting('use_pagination')
         if use_pagination:
@@ -111,6 +119,34 @@ class Views:
              renderer='json')
 def use_auto_pagination(context, request):
     return {'use_auto_pagination': get_setting('use_auto_pagination')}
+
+
+@view_config(name="blog_sidebar",
+             renderer="kotti_blog:templates/blog-sidebar.pt")
+def blog_sidebar_view(request, context):
+    # Only show sidebar on Blog and Blog Entries
+
+    if not (isinstance(request, Blog) or isinstance(request, BlogEntry)):
+        raise PredicateMismatch()
+
+    # Find the blog
+
+    if isinstance(request, Blog):
+        blog = request
+    else:
+        blog = request.parent
+
+    # Get all tags so they can be shown in the sidebar and we can filter on
+    # them
+    api = template_api(request, context)
+
+    unique_tags = set()
+    [unique_tags.update(child.tags) for child in blog.children]
+
+    return {
+        'blog_url': api.url(blog),
+        'unique_tags': unique_tags,
+    }
 
 
 def includeme_edit(config):
@@ -155,4 +191,5 @@ def includeme(config):
             config.override_asset(to_override='kotti_blog', override_with=override)
     includeme_edit(config)
     config.add_static_view('static-kotti_blog', 'kotti_blog:static')
+    assign_slot('blog_sidebar', 'right')
     config.scan(__name__)
