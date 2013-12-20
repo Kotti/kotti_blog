@@ -1,6 +1,6 @@
 <div class="blog-sidebar">
   <div class="categories">
-    <h5>Categories:</h5>
+    <h5><tal:block i18n:translate="">Categories</tal:block>:</h5>
 
     <ul>
       <li tal:repeat="tag unique_tags">
@@ -10,7 +10,7 @@
   </div>
 
   <div class="archive">
-    <h5>Archives:</h5>
+    <h5><tal:block i18n:translate="">Archives</tal:block>:</h5>
 
     <ul>
       <li tal:repeat="date dates">

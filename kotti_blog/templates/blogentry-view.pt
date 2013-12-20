@@ -11,7 +11,7 @@
       <h1>${api.context.title}</h1>
       <div class="blog-metadata">
         <span class="date" tal:content="api.format_datetime(context.date, 'MMM dd, yyyy \'at\' HH:mm')" />
-        | tags:
+        | <tal:block i18n:translate="">tags</tal:block>:
         <span class="tags">
           <tal:block tal:repeat="tag context.tags">
           <a href="${api.url(context.parent)}?selected-tag=${tag}">${tag}</a><tal:block tal:condition="not: repeat.tag.end">,</tal:block>
