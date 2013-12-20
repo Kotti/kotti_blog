@@ -5,3 +5,13 @@ Categories:
     <a tal:attributes="href blog_url + '?selected-tag=' + tag">${tag}</a>
   </li>
 </ul>
+
+
+Dates:
+
+<ul>
+  <li tal:repeat="date dates">
+    <a href="${blog_url}?date=${date.year}_${date.month}">${api.format_date(date, 'MMMM yyyy')}</a>
+  </li>
+</ul>
+

@@ -143,9 +143,24 @@ def blog_sidebar_view(context, request):
     unique_tags = set()
     [unique_tags.update(child.tags) for child in blog.children]
 
+
+    # Get all dates
+    dates = [(i.date.year, i.date.month) for i in blog.children]
+    # Get rid of duplicates, sort by year and month (default behaviour)
+    dates = sorted(list(set(dates)), reverse=True)
+
+    from datetime import date
+
+    dates_objects = [date(i[0], i[1], 1) for i in dates]
+
+
+    # api.format_datetime(entry.start, 'dd.MM.yyyy HH:mm')
+
+
     return {
         'blog_url': api.url(blog),
         'unique_tags': unique_tags,
+        'dates': dates_objects,
     }
 
 
