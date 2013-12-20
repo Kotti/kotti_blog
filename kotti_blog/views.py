@@ -139,13 +139,14 @@ def blog_sidebar_view(context, request):
     # Get all tags so they can be shown in the sidebar and we can filter on
     # them
     api = template_api(context, request)
+    children = blog.children_with_permission(request)
 
     unique_tags = set()
-    [unique_tags.update(child.tags) for child in blog.children]
+    [unique_tags.update(child.tags) for child in children]
 
 
     # Get all dates
-    dates = [(i.date.year, i.date.month) for i in blog.children]
+    dates = [(i.date.year, i.date.month) for i in children]
     # Get rid of duplicates, sort by year and month (default behaviour)
     dates = sorted(list(set(dates)), reverse=True)
 
