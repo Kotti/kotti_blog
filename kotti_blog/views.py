@@ -123,22 +123,22 @@ def use_auto_pagination(context, request):
 
 @view_config(name="blog_sidebar",
              renderer="kotti_blog:templates/blog-sidebar.pt")
-def blog_sidebar_view(request, context):
+def blog_sidebar_view(context, request):
     # Only show sidebar on Blog and Blog Entries
 
-    if not (isinstance(request, Blog) or isinstance(request, BlogEntry)):
+    if not (isinstance(context, Blog) or isinstance(context, BlogEntry)):
         raise PredicateMismatch()
 
     # Find the blog
 
-    if isinstance(request, Blog):
-        blog = request
+    if isinstance(context, Blog):
+        blog = context
     else:
-        blog = request.parent
+        blog = context.parent
 
     # Get all tags so they can be shown in the sidebar and we can filter on
     # them
-    api = template_api(request, context)
+    api = template_api(context, request)
 
     unique_tags = set()
     [unique_tags.update(child.tags) for child in blog.children]
