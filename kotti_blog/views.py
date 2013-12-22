@@ -291,10 +291,24 @@ def blog_sidebar_view(context, request):
 
     api = template_api(context, request)
 
+    use_categories = get_setting('use_sidebar_categories')
+    unique_tags = None
+    if use_categories:
+        number = get_setting('sidebar_categories_number')
+        unique_tags = blog.get_unique_tags(request)[:number]
+
+    use_archives = get_setting('use_sidebar_archives')
+    archives = None
+    if use_archives:
+        number = get_setting('sidebar_archives_number')
+        archives = blog.get_archives(request)[:number]
+
     return {
         'blog_url': api.url(blog),
-        'unique_tags': blog.get_unique_tags(request),
-        'dates': blog.get_archives(request),
+        'unique_tags': unique_tags,
+        'use_categories': use_categories,
+        'archives': archives,
+        'use_archives': use_archives,
     }
 
 

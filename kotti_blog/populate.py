@@ -54,5 +54,53 @@ KottiBlogSettings = {
 }
 
 
+class UseSidebarCategories(colander.SchemaNode):
+    name = 'use_sidebar_categories'
+    title = _(u'Show categories in sidebar')
+    description = _(u'Show categories sorted by number of posts on which you '
+                    u'can filter.')
+    missing = True
+    default = True
+
+
+class SidebarCategoriesNumber(colander.SchemaNode):
+    name = 'sidebar_categories_number'
+    title = _(u'The number of categories shown')
+    description = _(u'Choose how many categories are shown in the sidebar.')
+    default = 5
+
+
+class UseSidebarArchives(colander.SchemaNode):
+    name = 'use_sidebar_archives'
+    title = _(u'Show archives in sidebar')
+    description = _(u'Show categories sorted by date on which you can filter.')
+    missing = True
+    default = True
+
+
+class SidebarArchivesNumber(colander.SchemaNode):
+    name = 'sidebar_archives_number'
+    title = _(u'The number of archives shown')
+    description = _(u'Choose how many archives are shown in the sidebar.')
+    default = 5
+
+
+class KottiBlogSidebarSettingsSchema(colander.MappingSchema):
+    use_sidebar_categories = UseSidebarCategories(colander.Boolean())
+    sidebar_categories_number = SidebarCategoriesNumber(colander.Integer())
+    use_sidebar_archives = UseSidebarArchives(colander.Boolean())
+    sidebar_archives_number = SidebarArchivesNumber(colander.Integer())
+
+
+KottiBlogSidebarSettings = {
+    'name': 'kotti_blog_sidebar_settings',
+    'title': _(u'Blog sidebar settings'),
+    'description': _(u"Settings for kotti_blog sidebar"),
+    'success_message': _(u"Successfully saved blog sidebar settings."),
+    'schema_factory': KottiBlogSidebarSettingsSchema,
+}
+
+
 def populate_settings():
     add_settings(KottiBlogSettings)
+    add_settings(KottiBlogSidebarSettings)

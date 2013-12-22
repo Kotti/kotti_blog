@@ -39,19 +39,32 @@ class Blog(Document):
 
     def get_unique_tags(self, request):
         children = self.get_children_with_permission(request)
-        unique_tags = set()
-        [unique_tags.update(child.tags) for child in children]
 
-        return unique_tags
+        unique_tags_dict = {}
+        for child in children:
+            for tag in child.tags:
+                try:
+                    unique_tags_dict[tag] += 1
+                except KeyError:
+                    unique_tags_dict[tag] = 1
+
+        return sorted(
+            unique_tags_dict.items(),
+            key=lambda x: x[1],
+            reverse=True
+        )
 
     def get_archives(self, request):
         children = self.get_children_with_permission(request)
-        dates = [(i.date.year, i.date.month) for i in children]
-        dates = sorted(list(set(dates)), reverse=True)
 
-        dates_objects = [date(i[0], i[1], 1) for i in dates]
+        dates_dict = {}
+        for child in children:
+            try:
+                dates_dict[date(child.date.year, child.date.month, 1)] += 1
+            except KeyError:
+                dates_dict[date(child.date.year, child.date.month, 1)] = 1
 
-        return dates_objects
+        return sorted(dates_dict.items(), reverse=True)
 
 
 class BlogEntry(Document):

@@ -1,20 +1,20 @@
 <div class="blog-sidebar">
-  <div class="categories">
+  <div class="categories" tal:condition="use_categories">
     <h5><tal:block i18n:translate="">Categories</tal:block>:</h5>
 
     <ul>
       <li tal:repeat="tag unique_tags">
-        <a href="${blog_url}categories/${tag}">${tag}</a>
+        <a href="${blog_url}categories/${tag[0]}">${tag[0]}</a> <span class="badge">${tag[1]}</span>
       </li>
     </ul>
   </div>
 
-  <div class="archive">
+  <div class="archive" tal:condition="use_archives">
     <h5><tal:block i18n:translate="">Archives</tal:block>:</h5>
 
     <ul>
-      <li tal:repeat="date dates">
-        <a href="${blog_url}archives/${date.year}_${date.month}">${api.format_date(date, 'MMMM yyyy')}</a>
+      <li tal:repeat="archive archives">
+        <a href="${blog_url}archives/${archive[0].year}_${archive[0].month}">${api.format_date(archive[0], 'MMMM yyyy')}</a> <span class="badge">${archive[1]}</span>
       </li>
     </ul>
   </div>
