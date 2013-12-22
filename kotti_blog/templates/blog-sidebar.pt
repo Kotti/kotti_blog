@@ -4,7 +4,7 @@
 
     <ul>
       <li tal:repeat="tag unique_tags">
-        <a href="${blog_url}?selected-tag=${tag}">${tag}</a>
+        <a href="${blog_url}categories/${tag}">${tag}</a>
       </li>
     </ul>
   </div>

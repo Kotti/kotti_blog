@@ -14,7 +14,7 @@
         | <tal:block i18n:translate="">tags</tal:block>:
         <span class="tags">
           <tal:block tal:repeat="tag context.tags">
-          <a href="${api.url(context.parent)}?selected-tag=${tag}">${tag}</a><tal:block tal:condition="not: repeat.tag.end">,</tal:block>
+          <a href="${api.url(context.parent)}categories/${tag}">${tag}</a><tal:block tal:condition="not: repeat.tag.end">,</tal:block>
           </tal:block></span>
       </div>
       <p class="description">

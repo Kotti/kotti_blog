@@ -18,7 +18,7 @@
     <div tal:condition="items" class="categories">
       <ul tal:repeat="tag items" class="blogentry">
         <li>
-          <a href="${api.url(context)}?selected-tag=${tag}">${tag}</a>
+          <a href="${api.url(context)}categories/{tag}">${tag}</a>
         </li>
       </ul>
     </div>
