@@ -77,7 +77,6 @@ class Views:
     def __init__(self, context, request):
         self.context = context
         self.request = request
-        # import pdb; pdb.set_trace()
 
     @view_config(context=Blog)
     def view_blog_super(self):
@@ -89,10 +88,10 @@ class Views:
         page = self.request.url.replace(api.url(self.context).strip('/'), '')
         page = page.strip('/')
 
+        # Pagination only works when specifying the view
         if page.startswith('view/'):
             page = page[5:]
-            # If we have url parameters, take first one as tag, second one as page,
-            # ignore the rest
+
             if page:
                 self.request.GET['page'] = page
 
@@ -109,7 +108,6 @@ class Views:
                  name='blog-view',
                  renderer='kotti_blog:templates/blog-view.pt')
     def view_blog(self):
-        # import pdb; pdb.set_trace()
         # Get the GET requests
         selected_tag = self.request.GET.get("selected-tag")
         selected_date = self.request.GET.get("selected-date")
@@ -130,7 +128,6 @@ class Views:
 
         # Filter on the tag
         if selected_tag:
-            # items = [it for it in items if any([i in it.tags for i in selected_tag])]
             items = [it for it in items if selected_tag in it.tags]
 
         page = self.request.params.get('page', 1)
@@ -178,7 +175,6 @@ class Views:
                 self.request.GET['selected-tag'] = url_parameters[0]
                 url_parameters_get += url_parameters[0] + '/'
                 self.request.GET['page'] = url_parameters[1]
-                # url_parameters_get += url_parameters[1]
             except IndexError:
                 pass
 
@@ -205,6 +201,65 @@ class Views:
             'api': template_api(self.context, self.request),
             'items': self.context.get_unique_tags(self.request)
         }
+
+
+    @view_config(context=Blog,
+                 name="archives")
+    def view_archives_super(self):
+        """A super view that either shows the list or filters by the provided
+        category/tag, which we get from the URL. We use this so we can have
+        URL's like:
+
+        blog/categories (shows the list)
+        blog/categories/tag1 (shows articles, filtered by tag 'tag1')
+        ...
+
+        """
+        api = template_api(self.context, self.request)
+
+        # Remove everything but the extra parameters
+        url_parameters = self.request.url.replace(
+            api.url(self.context) + 'archives',
+            ''
+        )
+        url_parameters = url_parameters.strip('/').split('/')
+
+        # If we have url parameters, take first one as tag, second one as page,
+        # ignore the rest
+        if url_parameters:
+            url_parameters_get = 'archives/'
+            try:
+                self.request.GET['selected-date'] = url_parameters[0]
+                url_parameters_get += url_parameters[0] + '/'
+                self.request.GET['page'] = url_parameters[1]
+            except IndexError:
+                pass
+
+            self.request.GET['url_parameters'] = url_parameters_get
+
+            return render_view_to_response(
+                self.context,
+                self.request,
+                name='blog-view'
+            )
+
+        # If no tag was provided, return the categories list
+        return render_view_to_response(
+            self.context,
+            self.request,
+            name='archives-list'
+        )
+
+    @view_config(context=Blog,
+                 name="archives-list",
+                 renderer='kotti_blog:templates/blog-categories.pt')
+    def view_archives_list(self):
+        return {
+            'api': template_api(self.context, self.request),
+            'items': self.context.get_archives(self.request)
+        }
+
+
 
     @view_config(context=BlogEntry,
                  renderer='kotti_blog:templates/blogentry-view.pt')
