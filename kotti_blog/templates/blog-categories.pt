@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xml:lang="en"
+      i18n:domain="kotti_blog"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      metal:use-macro="api.macro('kotti:templates/view/master.pt')">
+
+  <article metal:fill-slot="content" class="blog-categories content">
+
+    <h1><a href="${api.url(context)}">${context.title} <tal:block i18n:translate="">categories</tal:block></a></h1>
+    <p class="description">
+      ${context.description}
+    </p>
+    <p class="body">
+      ${structure: context.body}
+    </p>
+
+    <div tal:condition="items" class="categories">
+      <ul tal:repeat="tag items" class="blogentry">
+        <li>
+          <a href="${api.url(context)}?selected-tag=${tag}">${tag}</a>
+        </li>
+      </ul>
+    </div>
+
+  </article>
+</html>

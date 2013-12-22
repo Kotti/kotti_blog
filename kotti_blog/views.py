@@ -1,27 +1,27 @@
-import datetime
 from dateutil.tz import tzutc
+import datetime
 
-import colander
 from deform.widget import DateTimeInputWidget
+from pyramid.exceptions import PredicateMismatch
 from pyramid.renderers import get_renderer
+from pyramid.view import render_view_to_response
 from pyramid.view import view_config
 from pyramid.view import view_defaults
-from pyramid.exceptions import PredicateMismatch
+import colander
 
 from kotti import DBSession
 from kotti.security import has_permission
 from kotti.views.edit import DocumentSchema
 from kotti.views.form import AddFormView
 from kotti.views.form import EditFormView
-from kotti.views.util import template_api
 from kotti.views.slots import assign_slot
-
+from kotti.views.util import template_api
 from kotti_settings.util import get_setting
 
+from kotti_blog import _
 from kotti_blog.batch import Batch
 from kotti_blog.resources import Blog
 from kotti_blog.resources import BlogEntry
-from kotti_blog import _
 
 
 class BlogSchema(DocumentSchema):
@@ -77,10 +77,12 @@ class Views:
     def __init__(self, context, request):
         self.context = context
         self.request = request
+        # import pdb; pdb.set_trace()
 
     @view_config(context=Blog,
                  renderer='kotti_blog:templates/blog-view.pt')
     def view_blog(self):
+        # import pdb; pdb.set_trace()
         # Get the GET requests
         selected_tag = self.request.GET.get("selected-tag")
         selected_date = self.request.GET.get("selected-date")
@@ -90,7 +92,8 @@ class Views:
         query = query.filter(BlogEntry.parent_id == self.context.id)
         query = query.order_by(BlogEntry.date.desc())
         items = query.all()
-        items = [item for item in items if has_permission('view', item, self.request)]
+        items = [item for item in items
+                 if has_permission('view', item, self.request)]
 
         get = ''
 
@@ -122,6 +125,50 @@ class Views:
             'link_headline': get_setting('link_headline'),
             'get': get,
             }
+
+    @view_config(context=Blog,
+                 name="categories")
+    def view_categories_super(self):
+        """A super view that either shows the list or filters by the provided
+        category/tag, which we get from the URL. We use this so we can have
+        URL's like:
+
+        blog/categories (shows the list)
+        blog/categories/tag1 (shows articles, filtered by tag 'tag1')
+        ...
+
+        """
+        api = template_api(self.context, self.request)
+
+        # Remove everything that is not the passed tag from the URL
+        tag = self.request.url.replace(api.url(self.context) + 'categories',
+                                       '')
+        tag = tag.lstrip('/')
+
+        # If a tag was provided, push it into GET and return the blog view
+        if tag:
+            self.request.GET['selected-tag'] = tag
+            return render_view_to_response(
+                self.context,
+                self.request,
+                name='view'
+            )
+
+        # If no tag was provided, return the categories list
+        return render_view_to_response(
+            self.context,
+            self.request,
+            name='categories-list'
+        )
+
+    @view_config(context=Blog,
+                 name="categories-list",
+                 renderer='kotti_blog:templates/blog-categories.pt')
+    def view_categories_list(self):
+        return {
+            'api': template_api(self.context, self.request),
+            'items': self.context.get_unique_tags(self.request)
+        }
 
     @view_config(context=BlogEntry,
                  renderer='kotti_blog:templates/blogentry-view.pt')
