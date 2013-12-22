@@ -81,6 +81,7 @@ class Views:
     @view_config(context=Blog,
                  renderer='kotti_blog:templates/blog-view.pt')
     def view_blog(self):
+        # Get the GET requests
         selected_tag = self.request.GET.get("selected-tag")
         selected_date = self.request.GET.get("selected-date")
 
@@ -93,12 +94,14 @@ class Views:
 
         get = ''
 
+        # Filter on date
         if selected_date:
             get = '&selected-date=' + selected_date
             year, month = map(int, selected_date.split('_'))
             items = [it for it in items
                      if it.date.year == year and it.date.month == month]
 
+        # Filter on the tag
         if selected_tag:
             get = '&selected-tag=' + selected_tag
             # items = [it for it in items if any([i in it.tags for i in selected_tag])]
@@ -110,6 +113,7 @@ class Views:
             items = Batch.fromPagenumber(items,
                         pagesize=get_setting('pagesize'),
                         pagenumber=int(page))
+
         return {
             'api': template_api(self.context, self.request),
             'macros': macros,
@@ -136,7 +140,6 @@ def use_auto_pagination(context, request):
              renderer="kotti_blog:templates/blog-sidebar.pt")
 def blog_sidebar_view(context, request):
     # Only show sidebar on Blog and Blog Entries
-
     if not (isinstance(context, Blog) or isinstance(context, BlogEntry)):
         raise PredicateMismatch()
 
@@ -147,32 +150,12 @@ def blog_sidebar_view(context, request):
     else:
         blog = context.parent
 
-    # Get all tags so they can be shown in the sidebar and we can filter on
-    # them
     api = template_api(context, request)
-    children = blog.children_with_permission(request)
-
-    unique_tags = set()
-    [unique_tags.update(child.tags) for child in children]
-
-
-    # Get all dates
-    dates = [(i.date.year, i.date.month) for i in children]
-    # Get rid of duplicates, sort by year and month (default behaviour)
-    dates = sorted(list(set(dates)), reverse=True)
-
-    from datetime import date
-
-    dates_objects = [date(i[0], i[1], 1) for i in dates]
-
-
-    # api.format_datetime(entry.start, 'dd.MM.yyyy HH:mm')
-
 
     return {
         'blog_url': api.url(blog),
-        'unique_tags': unique_tags,
-        'dates': dates_objects,
+        'unique_tags': blog.get_unique_tags(request),
+        'dates': blog.get_archives(request),
     }
 
 

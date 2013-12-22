@@ -1,4 +1,5 @@
 import datetime
+from datetime import date
 from dateutil.tz import tzutc
 from sqlalchemy import Column
 from sqlalchemy import ForeignKey
@@ -32,6 +33,25 @@ class Blog(Document):
         add_view=u'add_blog',
         addable_to=[u'Document'],
         )
+
+    def get_children_with_permission(self, request):
+        return self.children_with_permission(request)
+
+    def get_unique_tags(self, request):
+        children = self.get_children_with_permission(request)
+        unique_tags = set()
+        [unique_tags.update(child.tags) for child in children]
+
+        return unique_tags
+
+    def get_archives(self, request):
+        children = self.get_children_with_permission(request)
+        dates = [(i.date.year, i.date.month) for i in children]
+        dates = sorted(list(set(dates)), reverse=True)
+
+        dates_objects = [date(i[0], i[1], 1) for i in dates]
+
+        return dates_objects
 
 
 class BlogEntry(Document):
