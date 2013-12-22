@@ -79,7 +79,34 @@ class Views:
         self.request = request
         # import pdb; pdb.set_trace()
 
+    @view_config(context=Blog)
+    def view_blog_super(self):
+        """A super view for the blog, used to handle pagination.
+        """
+        api = template_api(self.context, self.request)
+
+        # Remove everything but the extra parameters
+        page = self.request.url.replace(api.url(self.context).strip('/'), '')
+        page = page.strip('/')
+
+        if page.startswith('view/'):
+            page = page[5:]
+            # If we have url parameters, take first one as tag, second one as page,
+            # ignore the rest
+            if page:
+                self.request.GET['page'] = page
+
+        url_parameters_get = 'view/'
+        self.request.GET['url_parameters'] = url_parameters_get
+
+        return render_view_to_response(
+            self.context,
+            self.request,
+            name='blog-view'
+        )
+
     @view_config(context=Blog,
+                 name='blog-view',
                  renderer='kotti_blog:templates/blog-view.pt')
     def view_blog(self):
         # import pdb; pdb.set_trace()
@@ -95,18 +122,14 @@ class Views:
         items = [item for item in items
                  if has_permission('view', item, self.request)]
 
-        get = ''
-
         # Filter on date
         if selected_date:
-            get = '&selected-date=' + selected_date
             year, month = map(int, selected_date.split('_'))
             items = [it for it in items
                      if it.date.year == year and it.date.month == month]
 
         # Filter on the tag
         if selected_tag:
-            get = '&selected-tag=' + selected_tag
             # items = [it for it in items if any([i in it.tags for i in selected_tag])]
             items = [it for it in items if selected_tag in it.tags]
 
@@ -123,7 +146,7 @@ class Views:
             'items': items,
             'use_pagination': use_pagination,
             'link_headline': get_setting('link_headline'),
-            'get': get,
+            'url_parameters': self.request.GET.get("url_parameters")
             }
 
     @view_config(context=Blog,
@@ -140,18 +163,31 @@ class Views:
         """
         api = template_api(self.context, self.request)
 
-        # Remove everything that is not the passed tag from the URL
-        tag = self.request.url.replace(api.url(self.context) + 'categories',
-                                       '')
-        tag = tag.lstrip('/')
+        # Remove everything but the extra parameters
+        url_parameters = self.request.url.replace(
+            api.url(self.context) + 'categories',
+            ''
+        )
+        url_parameters = url_parameters.strip('/').split('/')
 
-        # If a tag was provided, push it into GET and return the blog view
-        if tag:
-            self.request.GET['selected-tag'] = tag
+        # If we have url parameters, take first one as tag, second one as page,
+        # ignore the rest
+        if url_parameters:
+            url_parameters_get = 'categories/'
+            try:
+                self.request.GET['selected-tag'] = url_parameters[0]
+                url_parameters_get += url_parameters[0] + '/'
+                self.request.GET['page'] = url_parameters[1]
+                # url_parameters_get += url_parameters[1]
+            except IndexError:
+                pass
+
+            self.request.GET['url_parameters'] = url_parameters_get
+
             return render_view_to_response(
                 self.context,
                 self.request,
-                name='view'
+                name='blog-view'
             )
 
         # If no tag was provided, return the categories list
