@@ -165,11 +165,12 @@ class Views:
             api.url(self.context) + 'categories',
             ''
         )
-        url_parameters = url_parameters.strip('/').split('/')
+        url_parameters = url_parameters.strip('/')
 
         # If we have url parameters, take first one as tag, second one as page,
         # ignore the rest
         if url_parameters:
+            url_parameters = url_parameters.split('/')
             url_parameters_get = 'categories/'
             try:
                 self.request.GET['selected-tag'] = url_parameters[0]
@@ -222,11 +223,12 @@ class Views:
             api.url(self.context) + 'archives',
             ''
         )
-        url_parameters = url_parameters.strip('/').split('/')
+        url_parameters = url_parameters.strip('/')
 
         # If we have url parameters, take first one as tag, second one as page,
         # ignore the rest
         if url_parameters:
+            url_parameters = url_parameters.split('/')
             url_parameters_get = 'archives/'
             try:
                 self.request.GET['selected-date'] = url_parameters[0]
