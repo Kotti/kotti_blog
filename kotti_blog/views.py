@@ -203,7 +203,6 @@ class Views:
             'items': self.context.get_unique_tags(self.request)
         }
 
-
     @view_config(context=Blog,
                  name="archives")
     def view_archives_super(self):
@@ -254,7 +253,7 @@ class Views:
 
     @view_config(context=Blog,
                  name="archives-list",
-                 renderer='kotti_blog:templates/blog-categories.pt')
+                 renderer='kotti_blog:templates/blog-archives.pt')
     def view_archives_list(self):
         return {
             'api': template_api(self.context, self.request),
