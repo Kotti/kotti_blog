@@ -18,7 +18,7 @@
     <div tal:condition="items" class="archives">
       <ul tal:repeat="archive items" class="blogentry">
         <li>
-          <a href="${api.url(context)}archives/${archive}">${api.format_date(archive, 'MMMM yyyy')}</a>
+          <a href="${api.url(context)}archives/${archive.year}_${archive.month}">${api.format_date(archive, 'MMMM yyyy')}</a>
         </li>
       </ul>
     </div>
