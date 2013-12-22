@@ -14,7 +14,7 @@
 
     <ul>
       <li tal:repeat="date dates">
-        <a href="${blog_url}?selected-date=${date.year}_${date.month}">${api.format_date(date, 'MMMM yyyy')}</a>
+        <a href="${blog_url}archives/${date.year}_${date.month}">${api.format_date(date, 'MMMM yyyy')}</a>
       </li>
     </ul>
   </div>
