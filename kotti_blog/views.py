@@ -78,6 +78,30 @@ class Views:
         self.context = context
         self.request = request
 
+        self.selected_tag = self.request.GET.get("selected-tag")
+        self.selected_month = self.selected_year = None
+        selected_date = self.request.GET.get("selected-date")
+
+        if selected_date:
+            self.selected_year, self.selected_month = map(
+                int,
+                selected_date.split('_')
+            )
+
+    def filter_blog_entry(self, entry):
+        # Filter on date
+        if self.selected_year and self.selected_month:
+            if(entry.date.year != self.selected_year or
+               entry.date.month != self.selected_month):
+                return False
+
+        # Filter on the tag
+        if self.selected_tag:
+            if self.selected_tag not in entry.tags:
+                return False
+
+        return True
+
     @view_config(context=Blog)
     def view_blog_super(self):
         """A super view for the blog, used to handle pagination.
@@ -108,24 +132,12 @@ class Views:
                  name='blog-view',
                  renderer='kotti_blog:templates/blog-view.pt')
     def view_blog(self):
-        # Get the GET requests
-        selected_tag = self.request.GET.get("selected-tag")
-        selected_date = self.request.GET.get("selected-date")
-
         macros = get_renderer('templates/macros.pt').implementation()
 
-        items = self.context.get_children_with_permission(self.request)
+        items = [child for child in
+                 self.context.get_children_with_permission(self.request) if
+                 self.filter_blog_entry(child)]
         items.sort(key=lambda x: x.date, reverse=True)
-
-        # Filter on date
-        if selected_date:
-            year, month = map(int, selected_date.split('_'))
-            items = [it for it in items
-                     if it.date.year == year and it.date.month == month]
-
-        # Filter on the tag
-        if selected_tag:
-            items = [it for it in items if selected_tag in it.tags]
 
         page = self.request.params.get('page', 1)
         use_pagination = get_setting('use_pagination')
