@@ -113,12 +113,9 @@ class Views:
         selected_date = self.request.GET.get("selected-date")
 
         macros = get_renderer('templates/macros.pt').implementation()
-        query = DBSession.query(BlogEntry)
-        query = query.filter(BlogEntry.parent_id == self.context.id)
-        query = query.order_by(BlogEntry.date.desc())
-        items = query.all()
-        items = [item for item in items
-                 if has_permission('view', item, self.request)]
+
+        items = self.context.get_children_with_permission(self.request)
+        items.sort(key=lambda x: x.date, reverse=True)
 
         # Filter on date
         if selected_date:
