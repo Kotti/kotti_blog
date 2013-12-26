@@ -1,6 +1,4 @@
 from dateutil.tz import tzutc
-import datetime
-
 from deform.widget import DateTimeInputWidget
 from pyramid.exceptions import PredicateMismatch
 from pyramid.renderers import get_renderer
@@ -8,9 +6,8 @@ from pyramid.view import render_view_to_response
 from pyramid.view import view_config
 from pyramid.view import view_defaults
 import colander
+import datetime
 
-from kotti import DBSession
-from kotti.security import has_permission
 from kotti.views.edit import DocumentSchema
 from kotti.views.form import AddFormView
 from kotti.views.form import EditFormView
