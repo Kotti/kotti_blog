@@ -7,7 +7,7 @@
 
   <article metal:fill-slot="content" class="blog-categories content">
 
-    <h1><a href="${api.url(context)}">${context.title} <tal:block i18n:translate="">categories</tal:block></a></h1>
+    <h1><a href="${api.url(context)}">${context.title}</a> <tal:block i18n:translate="">categories</tal:block></h1>
     <p class="description">
       ${context.description}
     </p>
@@ -18,7 +18,7 @@
     <div tal:condition="items" class="categories">
       <ul tal:repeat="tag items" class="blogentry">
         <li>
-          <a href="${api.url(context)}categories/{tag}">${tag}</a>
+          <a href="${api.url(context)}categories/{tag[0]}">${tag[0]}</a> <span class="badge">${tag[1]}</span>
         </li>
       </ul>
     </div>
