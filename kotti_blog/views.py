@@ -266,8 +266,6 @@ class Views:
             'items': self.context.get_archives(self.request)
         }
 
-
-
     @view_config(context=BlogEntry,
                  renderer='kotti_blog:templates/blogentry-view.pt')
     def view_blogentry(self):
