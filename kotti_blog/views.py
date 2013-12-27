@@ -299,13 +299,19 @@ def blog_sidebar_view(context, request):
     unique_tags = None
     if use_categories:
         number = get_setting('sidebar_categories_number')
-        unique_tags = blog.get_unique_tags(request)[:number]
+        if number:
+            unique_tags = blog.get_unique_tags(request)[:number]
+        else:
+            unique_tags = blog.get_unique_tags(request)
 
     use_archives = get_setting('use_sidebar_archives')
     archives = None
     if use_archives:
         number = get_setting('sidebar_archives_number')
-        archives = blog.get_archives(request)[:number]
+        if number:
+            archives = blog.get_archives(request)[:number]
+        else:
+            archives = blog.get_archives(request)
 
     return {
         'blog_url': api.url(blog),
