@@ -23,7 +23,7 @@
           </a>
         </h2>
         <div class="blog-metadata">
-          <span class="date" tal:content="api.format_datetime(item.date, 'MMM dd, yyyy \'at\' HH:mm')" />
+          <span class="date" tal:content="api.format_datetime(item.date)" />
           | <tal:block i18n:translate="">categories</tal:block>:
           <span class="categories">
             <tal:block tal:repeat="tag item.tags">

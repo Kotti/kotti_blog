@@ -10,7 +10,7 @@
     <div class="blogentry" data-uri="${api.url(context)}">
       <h1>${api.context.title}</h1>
       <div class="blog-metadata">
-        <span class="date" tal:content="api.format_datetime(context.date, 'MMM dd, yyyy \'at\' HH:mm')" />
+        <span class="date" tal:content="api.format_datetime(context.date)" />
         | <tal:block i18n:translate="">categories</tal:block>:
         <span class="categories">
           <tal:block tal:repeat="tag context.tags">
