@@ -34,11 +34,8 @@ class Blog(Document):
         addable_to=[u'Document'],
         )
 
-    def get_children_with_permission(self, request):
-        return self.children_with_permission(request)
-
     def get_unique_tags(self, request):
-        children = self.get_children_with_permission(request)
+        children = self.children_with_permission(request)
 
         unique_tags_dict = {}
         for child in children:
@@ -55,7 +52,7 @@ class Blog(Document):
         )
 
     def get_archives(self, request):
-        children = self.get_children_with_permission(request)
+        children = self.children_with_permission(request)
 
         dates_dict = {}
         for child in children:

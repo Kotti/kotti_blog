@@ -94,7 +94,7 @@ class Views:
 
         # Filter on the tag
         if self.selected_tag:
-            if self.selected_tag not in entry.tags:
+            if selected_tag not in entry.tags:
                 return False
 
         return True
@@ -132,7 +132,7 @@ class Views:
         macros = get_renderer('templates/macros.pt').implementation()
 
         items = [child for child in
-                 self.context.get_children_with_permission(self.request) if
+                 self.context.children_with_permission(self.request) if
                  self.filter_blog_entry(child)]
         items.sort(key=lambda x: x.date, reverse=True)
 
