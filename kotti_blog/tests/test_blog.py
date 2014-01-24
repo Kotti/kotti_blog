@@ -1,4 +1,4 @@
-
+# -*- coding: utf-8 -*-
 
 def test_blog_view(kotti_blog_populate_settings,
                    db_session, dummy_request):
@@ -27,3 +27,90 @@ def test_use_auto_pagination_view(kotti_blog_populate_settings,
 
     result = use_auto_pagination(get_root(), dummy_request)
     assert result['use_auto_pagination'] is False
+
+
+def test_archives_filter(kotti_blog_populate_settings,
+                         db_session, dummy_request):
+    import datetime
+    from dateutil.tz import tzutc
+    from kotti.resources import get_root
+    from kotti_blog.resources import Blog, BlogEntry
+    from kotti_blog.views import Views
+
+    root = get_root()
+    root['blog'] = Blog(u'Blog')
+    root['blog']['a'] = BlogEntry(title='Old one',
+                                  date=datetime.datetime(2012, 7, 28,
+                                                         tzinfo=tzutc()))
+    root['blog']['b'] = BlogEntry(title='Old two',
+                                  date=datetime.datetime(2012, 7, 29,
+                                                         tzinfo=tzutc()))
+    root['blog']['d'] = BlogEntry(title='New one',
+                                  date=datetime.datetime(2013, 7, 7,
+                                                         tzinfo=tzutc()))
+
+    dummy_request.GET['selected-date'] = '2012_07'
+    view = Views(root['blog'], dummy_request)
+    result = view.view_blog()
+    assert len(result['items']) == 2
+
+    titles = [i.title for i in result['items']]
+    assert 'Old one' in titles
+    assert 'Old two' in titles
+    assert 'New one' not in titles
+
+    dummy_request.GET['selected-date'] = '2013_07'
+    view = Views(root['blog'], dummy_request)
+    result = view.view_blog()
+    assert len(result['items']) == 1
+
+    dummy_request.GET['selected-date'] = '2013_12'
+    view = Views(root['blog'], dummy_request)
+    result = view.view_blog()
+    assert len(result['items']) == 0
+
+
+def test_tags_filter(kotti_blog_populate_settings,
+                     db_session, dummy_request):
+
+    import datetime
+    from dateutil.tz import tzutc
+    from kotti.resources import get_root
+    from kotti_blog.resources import Blog, BlogEntry
+    from kotti_blog.views import Views
+
+    root = get_root()
+    root['blog'] = Blog(u'Blog')
+    root['blog']['a'] = BlogEntry(title='One')
+    root['blog']['a'].tags = ['a', 'b', 'a b']
+    root['blog']['b'] = BlogEntry(title='Two')
+    root['blog']['b'].tags = ['a', 'öffi'.decode('utf-8')]
+
+    dummy_request.GET['selected-tag'] = 'd'
+    view = Views(root['blog'], dummy_request)
+    result = view.view_blog()
+    assert len(result['items']) == 0
+
+    dummy_request.GET['selected-tag'] = 'a'
+    view = Views(root['blog'], dummy_request)
+    result = view.view_blog()
+    assert len(result['items']) == 2
+
+    dummy_request.GET['selected-tag'] = 'b'
+    view = Views(root['blog'], dummy_request)
+    result = view.view_blog()
+    assert len(result['items']) == 1
+    assert result['items'][0].title == 'One'
+
+    dummy_request.GET['selected-tag'] = 'a b'
+    view = Views(root['blog'], dummy_request)
+    result = view.view_blog()
+    assert len(result['items']) == 1
+    assert result['items'][0].title == 'One'
+
+    dummy_request.GET['selected-tag'] = '%C3%B6ffi'
+    view = Views(root['blog'], dummy_request)
+    result = view.view_blog()
+    assert len(result['items']) == 1
+    assert result['items'][0].title == 'Two'
+
