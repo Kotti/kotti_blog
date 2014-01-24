@@ -1,4 +1,5 @@
 from dateutil.tz import tzutc
+import urllib2
 from deform.widget import DateTimeInputWidget
 from pyramid.exceptions import PredicateMismatch
 from pyramid.renderers import get_renderer
@@ -94,6 +95,8 @@ class Views:
 
         # Filter on the tag
         if self.selected_tag:
+            selected_tag = urllib2.unquote(self.selected_tag)
+            selected_tag = selected_tag.decode('utf-8')
             if selected_tag not in entry.tags:
                 return False
 
