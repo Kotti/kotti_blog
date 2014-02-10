@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+
 def test_blog_view(kotti_blog_populate_settings,
                    db_session, dummy_request):
     from kotti.resources import get_root
@@ -39,13 +40,13 @@ def test_archives_filter(kotti_blog_populate_settings,
 
     root = get_root()
     root['blog'] = Blog(u'Blog')
-    root['blog']['a'] = BlogEntry(title='Old one',
+    root['blog']['a'] = BlogEntry(title=u'Old one',
                                   date=datetime.datetime(2012, 7, 28,
                                                          tzinfo=tzutc()))
-    root['blog']['b'] = BlogEntry(title='Old two',
+    root['blog']['b'] = BlogEntry(title=u'Old two',
                                   date=datetime.datetime(2012, 7, 29,
                                                          tzinfo=tzutc()))
-    root['blog']['d'] = BlogEntry(title='New one',
+    root['blog']['d'] = BlogEntry(title=u'New one',
                                   date=datetime.datetime(2013, 7, 7,
                                                          tzinfo=tzutc()))
 
@@ -72,7 +73,6 @@ def test_archives_filter(kotti_blog_populate_settings,
 
 def test_tags_filter(kotti_blog_populate_settings,
                      db_session, dummy_request):
-
     import datetime
     from dateutil.tz import tzutc
     from kotti.resources import get_root
@@ -81,12 +81,12 @@ def test_tags_filter(kotti_blog_populate_settings,
 
     root = get_root()
     root['blog'] = Blog(u'Blog')
-    root['blog']['a'] = BlogEntry(title='One')
-    root['blog']['a'].tags = ['a', 'b', 'a b']
-    root['blog']['b'] = BlogEntry(title='Two')
-    root['blog']['b'].tags = ['a', 'öffi'.decode('utf-8')]
+    root['blog']['a'] = BlogEntry(title=u'One')
+    root['blog']['a'].tags = [u'a', u'b', u'a b']
+    root['blog']['b'] = BlogEntry(title=u'Two')
+    root['blog']['b'].tags = [u'a', 'öffi'.decode('utf-8')]
 
-    dummy_request.GET['selected-tag'] = 'd'
+    dummy_request.GET['selected-tag'] = u'd'
     view = Views(root['blog'], dummy_request)
     result = view.view_blog()
     assert len(result['items']) == 0
