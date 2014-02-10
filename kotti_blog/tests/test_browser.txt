@@ -138,7 +138,7 @@ Check the addon is locale aware
   >>> browser_de.open(testing.BASE_URL + '/neuer-blog/@@add_blogentry')
   >>> ctrl_de("Titel").value = "Erster Blogeintrag"
   >>> ctrl_de("Inhalt").value = "Also, ich sag mal..."
-  >>> ctrl_de("Date").value = "2012-07-31 05:00:00"
+  >>> ctrl_de("Datum").value = "2012-07-31 05:00:00"
   >>> ctrl_de(name="save").click()
 
   >>> "Jul 31, 2012" in browser_de.contents

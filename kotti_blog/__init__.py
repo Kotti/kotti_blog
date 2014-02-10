@@ -4,7 +4,13 @@ _ = TranslationStringFactory('kotti_blog')
 
 
 def kotti_configure(settings):
-    settings['pyramid.includes'] += ' kotti_blog.views'
+
+    settings['pyramid.includes'] += ' kotti_blog kotti_blog.views'
     settings['kotti.available_types'] +=\
         ' kotti_blog.resources.Blog kotti_blog.resources.BlogEntry'
     settings['kotti.populators'] += ' kotti_blog.populate.populate_settings'
+
+
+def includeme(config):
+
+    config.add_translation_dirs('kotti_blog:locale')
