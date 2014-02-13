@@ -64,6 +64,10 @@ Add a blog and blogentries
   >>> browser.open(testing.BASE_URL + '/new-blog/')
   >>> 'pagination' in browser.contents
   True
-  >>> 'Next' in browser.contents
+  >>> '/new-blog/view/2">Next 1 items</a>' in browser.contents
+  True
+
+  >>> browser.getLink('2').click()
+  >>> '/new-blog/view/1">Previous 2 items</a>' in browser.contents
   True
 

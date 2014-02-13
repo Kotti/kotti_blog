@@ -14,7 +14,7 @@ def test_kotti_configure():
 
     kotti_configure(settings)
 
-    assert settings['pyramid.includes'] == ' kotti_blog kotti_blog.views'
+    assert settings['pyramid.includes'] == ' kotti_blog kotti_blog.views kotti_blog.widgets'
     assert settings['kotti.available_types'] == \
         ' kotti_blog.resources.Blog kotti_blog.resources.BlogEntry'
     assert settings['kotti.populators'] == \

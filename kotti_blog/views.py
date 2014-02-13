@@ -282,49 +282,6 @@ def use_auto_pagination(context, request):
     return {'use_auto_pagination': get_setting('use_auto_pagination')}
 
 
-@view_config(name="blog_sidebar",
-             renderer="kotti_blog:templates/blog-sidebar.pt")
-def blog_sidebar_view(context, request):
-    # Only show sidebar on Blog and Blog Entries
-    if not (isinstance(context, Blog) or isinstance(context, BlogEntry)):
-        raise PredicateMismatch()
-
-    # Find the blog
-
-    if isinstance(context, Blog):
-        blog = context
-    else:
-        blog = context.parent
-
-    api = template_api(context, request)
-
-    use_categories = get_setting('use_sidebar_categories')
-    unique_tags = None
-    if use_categories:
-        number = get_setting('sidebar_categories_number')
-        if number:
-            unique_tags = blog.get_unique_tags(request)[:number]
-        else:
-            unique_tags = blog.get_unique_tags(request)
-
-    use_archives = get_setting('use_sidebar_archives')
-    archives = None
-    if use_archives:
-        number = get_setting('sidebar_archives_number')
-        if number:
-            archives = blog.get_archives(request)[:number]
-        else:
-            archives = blog.get_archives(request)
-
-    return {
-        'blog_url': api.url(blog),
-        'unique_tags': unique_tags,
-        'use_categories': use_categories,
-        'archives': archives,
-        'use_archives': use_archives,
-    }
-
-
 def includeme_edit(config):
 
     config.add_view(
