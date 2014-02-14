@@ -111,3 +111,43 @@ def test_tags_filter(kotti_blog_populate_settings,
     result = view.view_blog()
     assert len(result['items']) == 1
     assert result['items'][0].title == 'Two'
+
+
+def test_include_social(kotti_blog_populate_settings,
+                        config, db_session, dummy_request):
+    from kotti.resources import get_root
+    from kotti_settings.util import set_setting
+    from kotti_blog.resources import Blog, BlogEntry
+    from kotti_blog.views import Views
+    import fanstatic
+
+    root = get_root()
+    root['blog'] = Blog(u'Blog')
+    root['blog']['a'] = BlogEntry(title=u'One')
+
+    dummy = fanstatic.init_needed()
+    set_setting('kotti_blog-include_social', False)
+    view = Views(root['blog']['a'], dummy_request)
+    result = view.view_blogentry()
+    resources = fanstatic.get_needed().resources()
+    resource_names = [res.filename for res in resources]
+    assert result['include_social'] == False
+    assert 'jquery.socialshareprivacy.en.js' not in resource_names
+
+    set_setting('kotti_blog-include_social', True)
+    view = Views(root['blog']['a'], dummy_request)
+    result = view.view_blogentry()
+    resources = fanstatic.get_needed().resources()
+    resource_names = [res.filename for res in resources]
+    assert result['include_social'] == True
+    assert 'jquery.socialshareprivacy.en.js' in resource_names
+
+    dummy = fanstatic.init_needed()
+    settings = config.get_settings()
+    settings['pyramid.default_locale_name'] = 'de'
+    view = Views(root['blog']['a'], dummy_request)
+    result = view.view_blogentry()
+    resources = fanstatic.get_needed().resources()
+    resource_names = [res.filename for res in resources]
+    assert 'jquery.socialshareprivacy.en.js' not in resource_names
+    assert 'jquery.socialshareprivacy.de.js' in resource_names

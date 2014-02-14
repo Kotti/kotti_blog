@@ -38,11 +38,22 @@ class LinkHeadlineSchemaNode(colander.SchemaNode):
     default = True
 
 
+class IncludeSocialSharePrivacySchemaNode(colander.SchemaNode):
+    name = 'include_social'
+    title = _(u'Include Social Share Privacy')
+    description = _(u'Include social media buttons in the blog '
+                    u'entry view. Currently facebook, twitter and '
+                    u'Google+ are included.')
+    missing = True
+    default = True
+
+
 class KottiBlogSettingsSchema(colander.MappingSchema):
     use_pagination = UsePaginationSchemaNode(colander.Boolean())
     pagesize = PagesizeSchemaNode(colander.Integer())
     use_auto_pagination = UseAutoPaginationSchemaNode(colander.Boolean())
     link_headline = LinkHeadlineSchemaNode(colander.Boolean())
+    include_social = IncludeSocialSharePrivacySchemaNode(colander.Boolean())
 
 
 KottiBlogSettings = {

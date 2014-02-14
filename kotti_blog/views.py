@@ -3,6 +3,7 @@ import urllib2
 from deform.widget import DateTimeInputWidget
 from pyramid.exceptions import PredicateMismatch
 from pyramid.renderers import get_renderer
+from pyramid.threadlocal import get_current_registry
 from pyramid.view import render_view_to_response
 from pyramid.view import view_config
 from pyramid.view import view_defaults
@@ -152,7 +153,7 @@ class Views:
             'items': items,
             'use_pagination': use_pagination,
             'link_headline': get_setting('link_headline'),
-            'url_parameters': self.request.GET.get("url_parameters")
+            'url_parameters': self.request.GET.get("url_parameters"),
             }
 
     @view_config(context=Blog,
@@ -272,8 +273,20 @@ class Views:
     @view_config(context=BlogEntry,
                  renderer='kotti_blog:templates/blogentry-view.pt')
     def view_blogentry(self):
-        return {}
+        return {'include_social': self.include_social()}
 
+    def include_social(self):
+        include_social = get_setting('include_social')
+        if include_social:
+            settings = get_current_registry().settings
+            default_locale_name = settings['pyramid.default_locale_name']
+            if 'de' in default_locale_name:
+                from kotti_blog.fanstatic import social_privacy_de_js
+                social_privacy_de_js.need()
+            else:
+                from kotti_blog.fanstatic import social_privacy_en_js
+                social_privacy_en_js.need()
+        return include_social
 
 @view_config(name='kotti_blog_use_auto_pagination',
              permission='edit',
