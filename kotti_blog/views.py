@@ -324,5 +324,4 @@ def includeme(config):
             config.override_asset(to_override='kotti_blog', override_with=override)
     includeme_edit(config)
     config.add_static_view('static-kotti_blog', 'kotti_blog:static')
-    assign_slot('blog_sidebar', 'right')
     config.scan(__name__)
