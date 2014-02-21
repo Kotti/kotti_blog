@@ -289,7 +289,7 @@ class Views:
         return include_social
 
 @view_config(name='kotti_blog_use_auto_pagination',
-             permission='edit',
+             permission='view',
              renderer='json')
 def use_auto_pagination(context, request):
     return {'use_auto_pagination': get_setting('use_auto_pagination')}
