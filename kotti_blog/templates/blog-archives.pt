@@ -7,7 +7,7 @@
 
   <article metal:fill-slot="content" class="blog-archives content">
 
-    <h1><a href="${api.url(context)}">${context.title}</a> <tal:block i18n:translate="">archives</tal:block></h1>
+    <h1><a href="${api.url(context)}">${context.title}</a> <tal:block i18n:translate="">Archives</tal:block></h1>
     <p class="description">
       ${context.description}
     </p>
