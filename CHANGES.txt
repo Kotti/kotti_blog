@@ -7,6 +7,7 @@ CHANGES
 - Included social media buttons to the blog entry view. The fork
   https://github.com/patrickheck/socialshareprivacy/ of
   http://www.heise.de/extras/socialshareprivacy/ was used for the implementation.
+- Update translations.
 
 
 0.4(2013-10-20)

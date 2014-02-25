@@ -55,13 +55,15 @@ msgstr ""
 
 #: kotti_blog/populate.py:43
 msgid "Include Social Share Privacy"
-msgstr ""
+msgstr "Include Social Share Privacy"
 
 #: kotti_blog/populate.py:44
 msgid ""
 "Include social media buttons in the blog entry view. Currently facebook, "
 "twitter and Google+ are included."
 msgstr ""
+"Include social media buttons in the blog entry view. Currently facebook, "
+"twitter and Google+ are included."
 
 #: kotti_blog/populate.py:61
 msgid "Blog settings"
@@ -77,42 +79,39 @@ msgstr "Successfully saved blog settings."
 
 #: kotti_blog/populate.py:70
 msgid "Show categories in sidebar"
-msgstr ""
+msgstr "Show categories in sidebar"
 
 #: kotti_blog/populate.py:71
 msgid "Show categories sorted by number of posts on which you can filter."
-msgstr ""
+msgstr "Show categories sorted by number of posts on which you can filter."
 
 #: kotti_blog/populate.py:79
 msgid "The number of categories shown"
-msgstr ""
+msgstr "The number of categories shown"
 
 #: kotti_blog/populate.py:87
 msgid "Show archives in sidebar"
-msgstr ""
+msgstr "Show archives in sidebar"
 
 #: kotti_blog/populate.py:88
 msgid "Show categories sorted by date on which you can filter."
-msgstr ""
+msgstr "Show categories sorted by date on which you can filter."
 
 #: kotti_blog/populate.py:95
 msgid "The number of archives shown"
-msgstr ""
+msgstr "The number of archives shown"
 
 #: kotti_blog/populate.py:110
-#, fuzzy
 msgid "Blog sidebar settings"
-msgstr "Blog settings"
+msgstr "Blog sidebar settings"
 
 #: kotti_blog/populate.py:111
-#, fuzzy
 msgid "Settings for kotti_blog sidebar"
-msgstr "Settings for kotti_blog"
+msgstr "Settings for kotti_blog sidebar"
 
 #: kotti_blog/populate.py:112
-#, fuzzy
 msgid "Successfully saved blog sidebar settings."
-msgstr "Successfully saved blog settings."
+msgstr "Successfully saved blog sidebar settings."
 
 #: kotti_blog/resources.py:32 kotti_blog/views.py:56
 msgid "Blog"
@@ -120,11 +119,11 @@ msgstr "Blog"
 
 #: kotti_blog/resources.py:73
 msgid "Blog entry"
-msgstr "Blogeintrag"
+msgstr "Blog entry"
 
 #: kotti_blog/views.py:41
 msgid "Date"
-msgstr "Datum"
+msgstr "Date"
 
 #: kotti_blog/views.py:42
 msgid ""
