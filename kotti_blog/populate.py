@@ -1,5 +1,7 @@
 import colander
 
+from deform_bootstrap.widget import ChosenMultipleWidget
+
 from kotti.views.slots import assign_slot
 
 from kotti_settings.config import SlotSchemaNode
@@ -52,12 +54,28 @@ class IncludeSocialSharePrivacySchemaNode(colander.SchemaNode):
     default = True
 
 
+social_media_buttons = ((u'facebook', _(u'Facebook')),
+                        (u'twitter', _(u'Twitter')),
+                        (u'google', _(u'Goolge+')),
+                       )
+
+
+class SocialMediaButtons(colander.SchemaNode):
+    name=u'social_media_buttons'
+    title=_(u'Social media buttons')
+    description=_(u'Enable only specific social media buttons.')
+    widget = ChosenMultipleWidget(values=social_media_buttons)
+    default = [u'facebook', u'twitter', u'google']
+    missing = [u'facebook', u'twitter', u'google']
+
+
 class KottiBlogSettingsSchema(colander.MappingSchema):
     use_pagination = UsePaginationSchemaNode(colander.Boolean())
     pagesize = PagesizeSchemaNode(colander.Integer())
     use_auto_pagination = UseAutoPaginationSchemaNode(colander.Boolean())
     link_headline = LinkHeadlineSchemaNode(colander.Boolean())
     include_social = IncludeSocialSharePrivacySchemaNode(colander.Boolean())
+    social_media_buttons = SocialMediaButtons(colander.Set())
 
 
 KottiBlogSettings = {

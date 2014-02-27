@@ -295,6 +295,15 @@ def use_auto_pagination(context, request):
     return {'use_auto_pagination': get_setting('use_auto_pagination')}
 
 
+@view_config(name='kotti_blog_social_media_buttons',
+             permission='view',
+             renderer='json')
+def social_media_buttons(context, request):
+    social_media_buttons = get_setting('social_media_buttons')
+    social_media_buttons = [str(button) for button in social_media_buttons]
+    return {'social_media_buttons': social_media_buttons}
+
+
 def includeme_edit(config):
 
     config.add_view(

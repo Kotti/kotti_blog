@@ -8,6 +8,7 @@ CHANGES
   https://github.com/patrickheck/socialshareprivacy/ of
   http://www.heise.de/extras/socialshareprivacy/ was used for the implementation.
 - Added settings to enable/disable sidebar and choose the slot where it is shown.
+- Enable/disable/choose which sharing buttons you want to have on your blog entries.
 - Update translations.
 
 
