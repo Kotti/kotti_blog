@@ -1,5 +1,9 @@
 import colander
 
+from kotti.views.slots import assign_slot
+
+from kotti_settings.config import SlotSchemaNode
+from kotti_settings.util import get_setting
 from kotti_settings.util import add_settings
 from kotti_blog import _
 
@@ -65,6 +69,14 @@ KottiBlogSettings = {
 }
 
 
+class ShowSidebar(colander.SchemaNode):
+    name = 'show_sidebar'
+    title = _(u'Show sidebar')
+    description = _(u'Show the sidebar in the blog view.')
+    missing = True
+    default = True
+
+
 class UseSidebarCategories(colander.SchemaNode):
     name = 'use_sidebar_categories'
     title = _(u'Show categories in sidebar')
@@ -99,6 +111,8 @@ class SidebarArchivesNumber(colander.SchemaNode):
 
 
 class KottiBlogSidebarSettingsSchema(colander.MappingSchema):
+    show_sidebar = ShowSidebar(colander.Boolean())
+    slot = SlotSchemaNode(colander.String())
     use_sidebar_categories = UseSidebarCategories(colander.Boolean())
     sidebar_categories_number = SidebarCategoriesNumber(colander.Integer())
     use_sidebar_archives = UseSidebarArchives(colander.Boolean())
@@ -117,3 +131,7 @@ KottiBlogSidebarSettings = {
 def populate_settings():
     add_settings(KottiBlogSettings)
     add_settings(KottiBlogSidebarSettings)
+    show_sidebar = get_setting('show_sidebar', False)
+    if show_sidebar:
+        slot = get_setting('slot', u'right')
+        assign_slot('blog_sidebar', slot)

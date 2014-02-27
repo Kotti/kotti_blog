@@ -1,10 +1,14 @@
+from pyramid.events import subscriber
 from pyramid.view import view_config
 from pyramid.exceptions import PredicateMismatch
 
 from kotti.views.slots import assign_slot
 from kotti.views.util import template_api
 
+from kotti_settings.events import SettingsAfterSave
 from kotti_settings.util import get_setting
+from kotti_settings.util import remove_from_slots
+from kotti_settings.util import show_in_context
 
 from kotti_blog.resources import Blog
 from kotti_blog.resources import BlogEntry
@@ -53,6 +57,21 @@ def blog_sidebar_view(context, request):
     }
 
 
+@subscriber(SettingsAfterSave)
+def set_assigned_slot(event):
+    """Reset the widget to the choosen slot."""
+
+    # Check if the settings for this module was saved.
+    if not event.module == __package__:
+        return
+
+    remove_from_slots('blog_sidebar')
+
+    show_sidebar = get_setting('show_sidebar', False)
+    if show_sidebar:
+        slot = get_setting('slot', u'right')
+        assign_slot('blog_sidebar', slot)
+
+
 def includeme(config):
     config.scan(__name__)
-    assign_slot('blog_sidebar', 'right')
