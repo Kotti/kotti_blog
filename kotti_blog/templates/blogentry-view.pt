@@ -11,11 +11,14 @@
       <h1>${api.context.title}</h1>
       <div class="blog-metadata">
         <span class="date" tal:content="api.format_datetime(context.date)" />
-        | <tal:block i18n:translate="">Categories</tal:block>:
-        <span class="categories">
-          <tal:block tal:repeat="tag context.tags">
-          <a href="${api.url(context.parent)}categories/${tag}">${tag}</a><tal:block tal:condition="not: repeat.tag.end">,</tal:block>
-          </tal:block></span>
+        <tal:categories tal:condition="context.tags">
+          | <tal:block i18n:translate="">Categories</tal:block>:
+          <span class="categories">
+            <tal:block tal:repeat="tag context.tags">
+              <a href="${api.url(context.parent)}categories/${tag}">${tag}</a><tal:block tal:condition="not: repeat.tag.end">,</tal:block>
+            </tal:block>
+          </span>
+        </tal:categories>
       </div>
       <p class="description">
         ${api.context.description}
