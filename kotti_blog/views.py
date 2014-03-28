@@ -299,8 +299,9 @@ def use_auto_pagination(context, request):
              permission='view',
              renderer='json')
 def social_media_buttons(context, request):
-    social_media_buttons = get_setting('social_media_buttons')
-    social_media_buttons = [str(button) for button in social_media_buttons]
+    social_media_buttons = get_setting('social_media_buttons', [])
+    if social_media_buttons:
+        social_media_buttons = [str(button) for button in social_media_buttons]
     return {'social_media_buttons': social_media_buttons}
 
 
