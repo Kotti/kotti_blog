@@ -28,7 +28,7 @@ class PagesizeSchemaNode(colander.SchemaNode):
 
 class UseAutoPaginationSchemaNode(colander.SchemaNode):
     name = 'use_auto_pagination'
-    title = _(u'Use auto pagination')
+    title = _(u'Use Auto Pagination')
     description = _(u'Blog entries loaded automatically when scrolling '
                     u'down the blog page.')
     missing = False
@@ -107,7 +107,7 @@ class UseSidebarCategories(colander.SchemaNode):
 class SidebarCategoriesNumber(colander.SchemaNode):
     name = 'sidebar_categories_number'
     title = _(u'The number of categories shown')
-    description = _(u'Choose how many categories are shown in the sidebar. ' +
+    description = _(u'Choose how many categories are shown in the sidebar. '
                     u'Set to 0 to show all categories.')
     default = 5
 
@@ -123,7 +123,7 @@ class UseSidebarArchives(colander.SchemaNode):
 class SidebarArchivesNumber(colander.SchemaNode):
     name = 'sidebar_archives_number'
     title = _(u'The number of archives shown')
-    description = _(u'Choose how many archives are shown in the sidebar. ' +
+    description = _(u'Choose how many archives are shown in the sidebar. '
                     u'Set to 0 to show all archives.')
     default = 5
 

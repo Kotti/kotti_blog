@@ -1,4 +1,8 @@
-<div class="blog-sidebar">
+<div class="blog-sidebar"
+     xmlns="http://www.w3.org/1999/xhtml"
+     xml:lang="en"
+     i18n:domain="kotti_blog"
+     xmlns:tal="http://xml.zope.org/namespaces/tal">
   <div class="categories" tal:condition="use_categories">
     <h5><tal:block i18n:translate="">Categories</tal:block>:</h5>
 

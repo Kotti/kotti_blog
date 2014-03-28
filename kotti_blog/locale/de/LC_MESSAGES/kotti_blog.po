@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kotti_blog 0.2dev\n"
 "Report-Msgid-Bugs-To: j23d@jusid.de\n"
-"POT-Creation-Date: 2014-02-25 21:39+0100\n"
-"PO-Revision-Date: 2012-07-16 10:39+0200\n"
+"POT-Creation-Date: 2014-03-28 09:59+0100\n"
+"PO-Revision-Date: 2014-03-28 10:05+0100\n"
 "Last-Translator: Marco Scheidhuber <j23d@jusid.de>\n"
 "Language-Team: de <j23d@jusid.de>\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
@@ -17,35 +17,35 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 0.9.6\n"
 
-#: kotti_blog/populate.py:9
+#: kotti_blog/populate.py:15
 msgid "Use pagination"
 msgstr "Paginierung aktivieren"
 
-#: kotti_blog/populate.py:10
+#: kotti_blog/populate.py:16
 msgid "Use pagination for entries on the blog."
 msgstr "Blogeinträge auf mehreren Seiten anzeigen."
 
-#: kotti_blog/populate.py:17
+#: kotti_blog/populate.py:23
 msgid "Page size"
 msgstr "Seitengröße"
 
-#: kotti_blog/populate.py:18
+#: kotti_blog/populate.py:24
 msgid "Choose how many blog entries are shown on one page."
 msgstr "Wählen Sie aus, wie viele Blogeinträge auf einer Seite angezeigt werden."
 
-#: kotti_blog/populate.py:25
-msgid "Use auto pagination"
+#: kotti_blog/populate.py:31
+msgid "Use Auto Pagination"
 msgstr "Automatische Paginierung aktivieren"
 
-#: kotti_blog/populate.py:26
+#: kotti_blog/populate.py:32
 msgid "Blog entries loaded automatically when scrolling down the blog page."
 msgstr "Blogeinträge werden beim scrollen der Seite automatisch nachgeladen."
 
-#: kotti_blog/populate.py:34
+#: kotti_blog/populate.py:40
 msgid "Link headline"
 msgstr "Überschrift verlinken"
 
-#: kotti_blog/populate.py:35
+#: kotti_blog/populate.py:41
 msgid ""
 "Control whether the headline of a blog entry in the blog is linked to the"
 " blog entry."
@@ -53,63 +53,111 @@ msgstr ""
 "Einstellung, ob die Überschrift auf der Übersichtsseite auf den "
 "Blogeintrag verlinken soll."
 
-#: kotti_blog/populate.py:43
+#: kotti_blog/populate.py:49
 msgid "Include Social Share Privacy"
 msgstr "Social Share Privacy einbinden"
 
-#: kotti_blog/populate.py:44
+#: kotti_blog/populate.py:50
 msgid ""
 "Include social media buttons in the blog entry view. Currently facebook, "
 "twitter and Google+ are included."
 msgstr ""
-"Social media im Blogeintrag integrieren. Es werden facebook, "
-"twitter und Google+ eingebunden."
+"Social media im Blogeintrag integrieren. Es werden facebook, twitter und "
+"Google+ eingebunden."
 
-#: kotti_blog/populate.py:61
+#: kotti_blog/populate.py:57
+msgid "Facebook"
+msgstr "Facebook"
+
+#: kotti_blog/populate.py:58
+msgid "Twitter"
+msgstr "Twitter"
+
+#: kotti_blog/populate.py:59
+msgid "Goolge+"
+msgstr "Google+"
+
+#: kotti_blog/populate.py:65
+msgid "Social media buttons"
+msgstr "Social media buttons"
+
+#: kotti_blog/populate.py:66
+msgid "Enable only specific social media buttons."
+msgstr "Nur bestimmte Social Media Buttons aktivieren."
+
+#: kotti_blog/populate.py:83
 msgid "Blog settings"
 msgstr "Blogeinstellungen"
 
-#: kotti_blog/populate.py:62
+#: kotti_blog/populate.py:84
 msgid "Settings for kotti_blog"
 msgstr "Einstellungen für kotti_blog"
 
-#: kotti_blog/populate.py:63
+#: kotti_blog/populate.py:85
 msgid "Successfully saved blog settings."
 msgstr "Blogeinstellungen erfolgreich gespeichert."
 
-#: kotti_blog/populate.py:70
+#: kotti_blog/populate.py:92
+msgid "Show sidebar"
+msgstr "Seitenleiste anzeigen"
+
+#: kotti_blog/populate.py:93
+msgid "Show the sidebar in the blog view."
+msgstr "Zeige die Seitenleiste in der Blogansicht."
+
+#: kotti_blog/populate.py:100
 msgid "Show categories in sidebar"
 msgstr "Zeige die Kategorien in der Seitenleiste an"
 
-#: kotti_blog/populate.py:71
+#: kotti_blog/populate.py:101
 msgid "Show categories sorted by number of posts on which you can filter."
-msgstr "Zeige die Kategorien mit der Anzahl der Beiträge, nach denen gefiltert werden kann."
+msgstr ""
+"Zeige die Kategorien mit der Anzahl der Beiträge, nach denen gefiltert "
+"werden kann."
 
-#: kotti_blog/populate.py:79
+#: kotti_blog/populate.py:109
 msgid "The number of categories shown"
 msgstr "Anzahl der angezeigten Kategorien"
 
-#: kotti_blog/populate.py:87
+#: kotti_blog/populate.py:110
+msgid ""
+"Choose how many categories are shown in the sidebar. Set to 0 to show all"
+" categories."
+msgstr ""
+"Ŵie viele Kategorien sollen in der Seitenleiste angezeigt werden? 0 "
+"wählen, um alle anzuzeigen."
+
+#: kotti_blog/populate.py:117
 msgid "Show archives in sidebar"
 msgstr "Zeige die Archive in der Seitenleiste"
 
-#: kotti_blog/populate.py:88
+#: kotti_blog/populate.py:118
 msgid "Show categories sorted by date on which you can filter."
-msgstr "Zeige die Kategorien sortiert nach Datum, nach denen gefiltert werden kann."
+msgstr ""
+"Zeige die Kategorien sortiert nach Datum, nach denen gefiltert werden "
+"kann."
 
-#: kotti_blog/populate.py:95
+#: kotti_blog/populate.py:125
 msgid "The number of archives shown"
 msgstr "Anzahl der angezeigten Archive"
 
-#: kotti_blog/populate.py:110
+#: kotti_blog/populate.py:126
+msgid ""
+"Choose how many archives are shown in the sidebar. Set to 0 to show all "
+"archives."
+msgstr ""
+"Ŵie viele Archive sollen in der Seitenleiste angezeigt werden? 0 wählen, "
+"um alle anzuzeigen."
+
+#: kotti_blog/populate.py:142
 msgid "Blog sidebar settings"
 msgstr "Einstellungen der Blog Seitenleiste"
 
-#: kotti_blog/populate.py:111
+#: kotti_blog/populate.py:143
 msgid "Settings for kotti_blog sidebar"
 msgstr "Einstellungen für die kotti_blog Seitenleiste"
 
-#: kotti_blog/populate.py:112
+#: kotti_blog/populate.py:144
 msgid "Successfully saved blog sidebar settings."
 msgstr "Einstellungen der Blog Seitenleiste erfolgreich gespeichert."
 
@@ -142,16 +190,12 @@ msgid "Blog Entry"
 msgstr "Blogeintrag"
 
 #: kotti_blog/templates/blog-archives.pt:10
-#: kotti_blog/templates/blog-sidebar.pt:13
+#: kotti_blog/templates/blog-sidebar.pt:17
 msgid "Archives"
 msgstr "Archive"
 
 #: kotti_blog/templates/blog-categories.pt:10
-#: kotti_blog/templates/blog-sidebar.pt:3
-msgid "Categories"
-msgstr "Kategorien"
-
-#: kotti_blog/templates/blog-view.pt:27
+#: kotti_blog/templates/blog-sidebar.pt:7 kotti_blog/templates/blog-view.pt:27
 #: kotti_blog/templates/blogentry-view.pt:14
 msgid "Categories"
 msgstr "Kategorien"
