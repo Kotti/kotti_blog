@@ -4,6 +4,10 @@ Blog addon for Kotti.
 kotti_blog
 ==========
 
+.. image:: https://pypip.in/version/kotti_blog/badge.svg
+    :target: https://pypi.python.org/pypi/kotti_blog/
+    :alt: Latest Version
+
 This is an extension to the Kotti CMS that adds a simple blog system to your site.
 
 `Find out more about Kotti`_
